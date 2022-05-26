@@ -8,7 +8,6 @@ import 'package:flutter/src/painting/text_span.dart';
 import 'dart:ui';
 import 'package:fdemo/graph/jz_rich_graph_renderer.dart';
 
-
 class JZRichGraphLineRendererValue {
   double value;
   String date;
@@ -54,28 +53,8 @@ class JZRichGraphLineRenderer extends JZRichGraphRenderer {
   @override
   Widget? getGestureRenderResult(
       int locationIn, Offset point, Size size, JZRichGraphParam param) {
-    final models = this.models;
-    final values = models.map((e) => e.value);
 
-    List<JZRGLinesPainterModel> painterModels = [];
-    {
-      //MARK: TEMP
-      List<JZRGLinesPainterElement> elements = [];
-      for (int i = 0; i < 100; i++) {
-        final element = JZRGLinesPainterElement(renderValue: Random().nextDouble(), origin: null);
-        elements.add(element);
-      }
-      final model = JZRGLinesPainterModel()
-          ..color = Colors.yellow
-          ..strokeWidth = 1
-          ..lines = elements;
-    }
-
-    return CustomPaint(
-      size: size,
-      painter: JZRGLinesPainter(visibleCount: 100, models: painterModels),
-    );
-
+    return null;
   }
 
   @override
@@ -109,8 +88,30 @@ class JZRichGraphLineRenderer extends JZRichGraphRenderer {
 
   @override
   Widget? getRenderResult(Size size, JZRichGraphParam param) {
-    // TODO: implement getRenderResult
-    return null;
+    final models = this.models;
+    final values = models.map((e) => e.value);
+
+    final renderCount = 1000;
+    List<JZRGLinesPainterModel> painterModels = [];
+    {
+      //MARK: TEMP
+      List<JZRGLinesPainterElement> elements = [];
+      for (int i = 0; i < renderCount; i++) {
+        final element = JZRGLinesPainterElement(renderValue: Random().nextDouble(), origin: null);
+        elements.add(element);
+      }
+      final model = JZRGLinesPainterModel()
+        ..color = Colors.yellow
+        ..strokeWidth = 1
+        ..lines = elements;
+
+      painterModels.add(model);
+    }
+
+    return CustomPaint(
+      size: size,
+      painter: JZRGLinesPainter(visibleCount: renderCount, models: painterModels),
+    );
   }
 
   @override
@@ -149,11 +150,13 @@ class JZRGLinesPainter extends CustomPainter {
   final List<JZRGLinesPainterModel> models;
 
   /// 可视的数据量
-  final int visibleCount;
+  //  int get visibleCount { return _visibleCount;}
+  //  set visibleCount(int value) { }
+  int? visibleCount = null;
 
   JZRGLinesPainter({
     required this.models,
-    required this.visibleCount,
+    this.visibleCount,
   });
 
   @override
@@ -166,18 +169,52 @@ class JZRGLinesPainter extends CustomPainter {
 
     double startX = 0;
 
+    final models = this.models;
+    var maxLength = 0;
+    {
+      for (int i = 0; i < models.length; i++) {
+        if (models[i].lines.length > maxLength) {
+          maxLength = models[i].lines.length;
+        }
+      }
+    }
+
+    final visibleCount = this.visibleCount ?? maxLength;
+    if (visibleCount <= 1) {
+      return;
+    }
+
+    final widthPerItem = size.width / (visibleCount - 1);
     canvas.drawLine(Offset(startX, 0), Offset(startX, 0), paint);
 
-    final models = this.models;
     models.forEach((element) {
       var linePaint = Paint();
       {
         // 位置计算
-        final renderValues = element.lines.map((e) => e.renderValue);
-        for (int i = 0; i < visibleCount; i++) {
-          if (element.lines.length > i) {
-            // canvas.drawLine(p1, p2, linePaint);
+        final renderValues = element.lines.map((e) => e.renderValue).toList();
+        if (renderValues.length > 1) {
+          //FIXME: 应该由外部提供
+          final max = renderValues.reduce((value, element) => (value > element) ? value : element);
+          final min = renderValues.reduce((value, element) => (value < element) ? value : element);
+
+          Offset? from = null;
+          for (int i = 0; i < visibleCount; i++) {
+            if (element.lines.length > i) {
+              /// 得到绘制的坐标
+              final y = (element.lines[i].renderValue / max) * size.height;
+              final to = Offset(startX, y);
+              if (from != null) {
+                canvas.drawLine(from, to, linePaint);
+                from = to;
+              } else {
+                from = to;
+              }
+              startX = startX + widthPerItem;
+            }
           }
+
+        } else if (renderValues.length == 1) {
+
         }
       }
     });
