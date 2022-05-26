@@ -14,7 +14,6 @@ class JZRichGraphLineRendererValue {
   JZRichGraphLineRendererValue({required this.value, required this.date});
 }
 
-
 class JZRichGraphLineRenderer extends JZRichGraphRenderer {
   /// 线的数据
   List<JZRichGraphLineRendererValue> models;
@@ -29,16 +28,28 @@ class JZRichGraphLineRenderer extends JZRichGraphRenderer {
     }
     if (models.length == 1) {
       final text = models.first.date;
-      return [const TextSpan(text: ""), TextSpan(text: text), const TextSpan(text: "")];
+      return [
+        const TextSpan(text: ""),
+        TextSpan(text: text),
+        const TextSpan(text: "")
+      ];
     }
     // 数据量为偶数情况
     if (models.length == 2 || (models.length % 2 == 0)) {
       final firstText = models.first.date;
       final lastText = models.last.date;
-      return [TextSpan(text: firstText), const TextSpan(text: ""), TextSpan(text: lastText)];
+      return [
+        TextSpan(text: firstText),
+        const TextSpan(text: ""),
+        TextSpan(text: lastText)
+      ];
     }
     int offset = ((models.length / 2).floor() + 1);
-    return [TextSpan(text: models.first.date), TextSpan(text: models[offset].date), TextSpan(text: models.last.date)];
+    return [
+      TextSpan(text: models.first.date),
+      TextSpan(text: models[offset].date),
+      TextSpan(text: models.last.date)
+    ];
   }
 
   @override
@@ -46,14 +57,14 @@ class JZRichGraphLineRenderer extends JZRichGraphRenderer {
     // 绘制线段
     return CustomPaint(
       size: size,
-      painter: JZLineBGPainter(count: 5, padding: EdgeInsets.fromLTRB(0, 10, 0, 10)),
+      painter:
+          JZLineBGPainter(count: 5, padding: EdgeInsets.fromLTRB(0, 10, 0, 10)),
     );
   }
 
   @override
   Widget? getGestureRenderResult(
       int locationIn, Offset point, Size size, JZRichGraphParam param) {
-
     return null;
   }
 
@@ -97,7 +108,8 @@ class JZRichGraphLineRenderer extends JZRichGraphRenderer {
       //MARK: TEMP
       List<JZRGLinesPainterElement> elements = [];
       for (int i = 0; i < renderCount; i++) {
-        final element = JZRGLinesPainterElement(renderValue: Random().nextDouble(), origin: null);
+        final element = JZRGLinesPainterElement(
+            renderValue: Random().nextDouble(), origin: null);
         elements.add(element);
       }
       final model = JZRGLinesPainterModel()
@@ -110,7 +122,8 @@ class JZRichGraphLineRenderer extends JZRichGraphRenderer {
 
     return CustomPaint(
       size: size,
-      painter: JZRGLinesPainter(visibleCount: renderCount, models: painterModels),
+      painter:
+          JZRGLinesPainter(visibleCount: renderCount, models: painterModels),
     );
   }
 
@@ -125,6 +138,7 @@ class JZRichGraphLineRenderer extends JZRichGraphRenderer {
   }
 }
 
+/// 单个线段的数据的模型
 class JZRGLinesPainterElement {
   /// 原始数据
   dynamic origin;
@@ -135,8 +149,8 @@ class JZRGLinesPainterElement {
   JZRGLinesPainterElement({required this.renderValue, required this.origin});
 }
 
+/// 线段样式的配置
 class JZRGLinesPainterModel {
-
   List<JZRGLinesPainterElement> lines = [];
 
   Color color = Colors.red;
@@ -146,7 +160,6 @@ class JZRGLinesPainterModel {
 
 /// 线段绘制
 class JZRGLinesPainter extends CustomPainter {
-
   final List<JZRGLinesPainterModel> models;
 
   /// 可视的数据量
@@ -187,21 +200,54 @@ class JZRGLinesPainter extends CustomPainter {
     final widthPerItem = size.width / (visibleCount - 1);
     canvas.drawLine(Offset(startX, 0), Offset(startX, 0), paint);
 
+    double? max;
+    double? min;
+    // 获取所有数据的最值
+    {
+      models.forEach((element) {
+        final renderValues = element.lines.map((e) => e.renderValue).toList();
+        if (renderValues.length > 0) {
+          final tmpMax = renderValues
+              .reduce((value, element) => (value > element) ? value : element);
+          final tmpMin = renderValues
+              .reduce((value, element) => (value < element) ? value : element);
+          if (max != null && min != null) {
+            if (max! > tmpMax) {
+              max = tmpMax;
+            }
+            if (min! < tmpMax) {
+              min = tmpMax;
+            }
+          } else {
+            max = tmpMax;
+            min = tmpMin;
+          }
+        }
+      });
+    }
+
+    if (max == min) {
+      return;
+    }
+
+    if (max == null || min == null) {
+      return;
+    }
+
     models.forEach((element) {
-      var linePaint = Paint();
+      var linePaint = Paint()
+        ..strokeWidth = element.strokeWidth
+        ..color = element.color;
+
+      final lines = element.lines;
       {
         // 位置计算
-        final renderValues = element.lines.map((e) => e.renderValue).toList();
-        if (renderValues.length > 1) {
-          //FIXME: 应该由外部提供
-          final max = renderValues.reduce((value, element) => (value > element) ? value : element);
-          final min = renderValues.reduce((value, element) => (value < element) ? value : element);
-
+        if (element.lines.length > 1) {
           Offset? from = null;
           for (int i = 0; i < visibleCount; i++) {
-            if (element.lines.length > i) {
+            if (lines.length > i) {
               /// 得到绘制的坐标
-              final y = (element.lines[i].renderValue / max) * size.height;
+              final y = (lines[i].renderValue / max!) * size.height;
               final to = Offset(startX, y);
               if (from != null) {
                 canvas.drawLine(from, to, linePaint);
@@ -212,10 +258,7 @@ class JZRGLinesPainter extends CustomPainter {
               startX = startX + widthPerItem;
             }
           }
-
-        } else if (renderValues.length == 1) {
-
-        }
+        } else if (lines.length == 1) {}
       }
     });
   }
