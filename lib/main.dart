@@ -1,4 +1,4 @@
-import 'package:fdemo/graph/rich_graph_route.dart';
+import 'package:fdemo/graph/rich_graph_demo_route.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const RichGraphRoute(),
+            builder: (context) => const RichGraphDemoRoute(),
           ),
         );
       };

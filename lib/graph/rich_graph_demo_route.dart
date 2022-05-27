@@ -1,18 +1,19 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:fdemo/graph/jz_rich_graph.dart';
+import 'package:fdemo/graph/jz_rich_demo_graph.dart';
 import 'package:fdemo/graph/jz_rich_graph_renderer.dart';
 import 'package:fdemo/graph/jz_rich_graph_renderer_line.dart';
 
-class RichGraphRoute extends StatefulWidget {
-  const RichGraphRoute({Key? key}) : super(key: key);
+/// DEMO
+class RichGraphDemoRoute extends StatefulWidget {
+  const RichGraphDemoRoute({Key? key}) : super(key: key);
 
   @override
-  State<RichGraphRoute> createState() => _RichGraphRouteState();
+  State<RichGraphDemoRoute> createState() => _RichGraphDemoRouteState();
 }
 
-class _RichGraphRouteState extends State<RichGraphRoute> {
+class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
   @override
   Widget build(BuildContext context) {
     var padding = EdgeInsets.zero;
@@ -21,8 +22,10 @@ class _RichGraphRouteState extends State<RichGraphRoute> {
         width: MediaQuery.of(context).size.width,
         height: 400,
         padding: padding,
-        visibleCount: 100
+        visibleCount: 10,
+      renderPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
         );
+
 
     List<JZRichGraphLineRendererValue> modelList = [];
 

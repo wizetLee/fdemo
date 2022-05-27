@@ -1,12 +1,12 @@
 import 'dart:math';
-
 import 'package:fdemo/jz_line_bg_painter.dart';
 import 'package:flutter/material.dart';
-import 'package:fdemo/graph/jz_rich_graph.dart';
+import 'package:fdemo/graph/jz_rich_demo_graph.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/painting/text_span.dart';
 import 'dart:ui';
 import 'package:fdemo/graph/jz_rich_graph_renderer.dart';
+
 
 class JZRichGraphLineRendererValue {
   double value;
@@ -100,16 +100,17 @@ class JZRichGraphLineRenderer extends JZRichGraphRenderer {
   @override
   Widget? getRenderResult(Size size, JZRichGraphParam param) {
     final models = this.models;
-    final values = models.map((e) => e.value);
+    final values = models.map((e) => e.value).toList();
 
-    final renderCount = 1000;
+    final targetCount = param.visibleCount;
+
     List<JZRGLinesPainterModel> painterModels = [];
     {
-      //MARK: TEMP
+      //MARK: 临时数据
       List<JZRGLinesPainterElement> elements = [];
-      for (int i = 0; i < renderCount; i++) {
+      for (int i = 0; i < values.length; i++) {
         final element = JZRGLinesPainterElement(
-            renderValue: Random().nextDouble(), origin: null);
+            renderValue: values[i], origin: null);
         elements.add(element);
       }
       final model = JZRGLinesPainterModel()
@@ -120,10 +121,15 @@ class JZRichGraphLineRenderer extends JZRichGraphRenderer {
       painterModels.add(model);
     }
 
+
+    final lpParam = JZRGLinesPainterParam()
+    ..visibleCount = param.visibleCount
+    ..padding = param.renderPadding
+    ;
     return CustomPaint(
       size: size,
       painter:
-          JZRGLinesPainter(visibleCount: renderCount, models: painterModels),
+          JZRGLinesPainter(models: painterModels, param: lpParam),
     );
   }
 
@@ -158,6 +164,17 @@ class JZRGLinesPainterModel {
   double strokeWidth = 1;
 }
 
+
+/// 绘制参数
+class JZRGLinesPainterParam {
+
+  int? visibleCount;
+
+  EdgeInsets padding = EdgeInsets.zero;
+
+  JZRGLinesPainterParam();
+}
+
 /// 线段绘制
 class JZRGLinesPainter extends CustomPainter {
   final List<JZRGLinesPainterModel> models;
@@ -165,22 +182,27 @@ class JZRGLinesPainter extends CustomPainter {
   /// 可视的数据量
   //  int get visibleCount { return _visibleCount;}
   //  set visibleCount(int value) { }
-  int? visibleCount = null;
+  JZRGLinesPainterParam param;
 
   JZRGLinesPainter({
     required this.models,
-    this.visibleCount,
+    required this.param,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
+
     final color = Colors.orangeAccent;
 
     var paint = Paint()
       ..strokeWidth = 1
       ..color = color;
 
-    double startX = 0;
+    var y = param.padding.top;
+    var x = param.padding.left;
+    final renderSize = Size(size.width - param.padding.left - param.padding.right, size.height - param.padding.top - param.padding.bottom);
+
+    double startX = x;
 
     final models = this.models;
     var maxLength = 0;
@@ -192,12 +214,12 @@ class JZRGLinesPainter extends CustomPainter {
       }
     }
 
-    final visibleCount = this.visibleCount ?? maxLength;
+    final visibleCount = this.param.visibleCount ?? maxLength;
     if (visibleCount <= 1) {
       return;
     }
 
-    final widthPerItem = size.width / (visibleCount - 1);
+    final widthPerItem = renderSize.width / (visibleCount - 1);
     canvas.drawLine(Offset(startX, 0), Offset(startX, 0), paint);
 
     double? max;
@@ -247,7 +269,7 @@ class JZRGLinesPainter extends CustomPainter {
           for (int i = 0; i < visibleCount; i++) {
             if (lines.length > i) {
               /// 得到绘制的坐标
-              final y = (lines[i].renderValue / max!) * size.height;
+              final y = (lines[i].renderValue / max!) * renderSize.height + param.padding.top;
               final to = Offset(startX, y);
               if (from != null) {
                 canvas.drawLine(from, to, linePaint);

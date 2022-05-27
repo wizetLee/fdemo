@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fdemo/graph/jz_rich_graph_renderer.dart';
 import 'package:fdemo/graph/jz_rich_graph_render_widget.dart';
@@ -17,7 +18,11 @@ enum JZRichGraphHeaderType {
 
 /// 配置
 class JZRichGraphParam {
+  /// widget外边距
   EdgeInsets padding = EdgeInsets.zero;
+
+  /// 绘图外边距
+  EdgeInsets renderPadding = EdgeInsets.zero;
 
   /// 视图中数据的可视数量
   int visibleCount = 0;
@@ -74,6 +79,7 @@ class JZRichGraphParam {
     required this.width,
     required this.height,
     this.padding = const EdgeInsets.all(0),
+    this.renderPadding = const EdgeInsets.all(0),
     this.visibleCount = 0,
     this.renderViewPadding = const EdgeInsets.all(0),
     this.dividingRuleCount = 5,
@@ -94,6 +100,7 @@ class JZRichGraphParam {
   });
 
   /// 获取绘制区的尺寸
+  /// 最大的绘图区（包括背景）
   Size getRenderSize() {
     return Size(
         this.width -
@@ -107,6 +114,13 @@ class JZRichGraphParam {
             this.bottomTextHeight -
             this.renderHeaderSpacing -
             this.headerHeight);
+  }
+
+  /// 除却renderPadding之后的绘图区
+  Size getRealRenderSize() {
+    final size = getRenderSize();
+    return Size(size.width - this.renderPadding.left - this.renderPadding.right,
+        size.height - this.renderPadding.top - this.renderPadding.bottom);
   }
 
   int getVisibleCount() {
@@ -173,7 +187,6 @@ class _JZRichGraphState extends State<JZRichGraph> {
             child: SizedBox(width: 20),
             decoration: BoxDecoration(color: Colors.cyan),
           ),
-          //FOX<E: 
         ],
       ),
     );
@@ -337,32 +350,45 @@ extension SubWidget on _JZRichGraphState {
       onDoubleTap: () {},
       onLongPress: () {},
       onLongPressEnd: (detail) {
-        //(visibleCount - 1)
-        print(detail.localPosition);
+        _gestureAction(detail.localPosition, renderSize);
       },
       onLongPressCancel: () {},
       onLongPressDown: (detail) {
-        print(detail.localPosition);
+        _gestureAction(detail.localPosition, renderSize);
       },
       onLongPressStart: (detail) {
-        print(detail.localPosition);
+        _gestureAction(detail.localPosition, renderSize);
       },
       onLongPressMoveUpdate: (detail) {
-        print(detail.localPosition);
-        // this.widget.render.getGestureRenderResult(locationIn, point, size, param)
+        _gestureAction(detail.localPosition, renderSize);
       },
       onLongPressUp: () {},
     );
   }
 
-  int _index(Offset point) {
+  /// 收视统一调度
+  _gestureAction(Offset localPosition, Size renderSize) {
+    final locationIn = _index(localPosition);
+    if (locationIn != null) {
+      if (kDebugMode) {
+        print("手势locationIn = ${locationIn}");
+      }
+      this.widget.renderer.getGestureRenderResult(
+          locationIn, localPosition, renderSize, this.widget.param);
+    }
+  }
+
+  int? _index(Offset point) {
     var index = -1;
     final maxCount = this.widget.param.getVisibleCount();
 
-    final size = this.widget.param.getRenderSize();
-    final stride = size.width / maxCount;
-    if ((point.dx >= 0.0) && (maxCount > 0)) {
-      index = (point.dx / stride).floor();
+    final size = this.widget.param.getRealRenderSize();
+
+    final widthPerItem = size.width / (maxCount - 1);
+    final beginLeft = this.widget.param.renderPadding.left;
+    if ((point.dx >= beginLeft) && (maxCount > 0)) {
+      final dx = point.dx - beginLeft;
+      index = (dx / widthPerItem).floor();
       if (index >= maxCount) {
         index = maxCount - 1;
       }
@@ -370,18 +396,18 @@ extension SubWidget on _JZRichGraphState {
       index = 0;
     }
 
-     {
-    final info = this.widget.renderer.getInfo(index);
-    if (info != null) {
-      // self.setInfo(info.getDesc(), isGesture: true)
+    {
+      final info = this.widget.renderer.getInfo(index);
+      if (info != null) {
+        // self.setInfo(info.getDesc(), isGesture: true)
+      }
     }
-     }
-     {
-       final info = this.widget.renderer.getInfoTitle(index);
-       if (info != null) {
-      // self.setInfoTitle(info.getDesc(), isGesture: true)
+    {
+      final info = this.widget.renderer.getInfoTitle(index);
+      if (info != null) {
+        // self.setInfoTitle(info.getDesc(), isGesture: true)
+      }
     }
-     }
 
     if (size.width <= 0 || size.height <= 0) {
     } else {
@@ -393,12 +419,11 @@ extension SubWidget on _JZRichGraphState {
     return index;
   }
 
-
   void setInfoTitle(dynamic title, bool isGesture) {
-        // self.infoView.setTitle(title, isGesture: isGesture)
-    }
-    
-    void setInfo(dynamic title, bool isGesture) {
-        // self.infoView.setInfo(title, isGesture: isGesture)
-    }
+    // self.infoView.setTitle(title, isGesture: isGesture)
+  }
+
+  void setInfo(dynamic title, bool isGesture) {
+    // self.infoView.setInfo(title, isGesture: isGesture)
+  }
 }

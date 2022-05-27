@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fdemo/graph/jz_rich_graph.dart';
+import 'package:fdemo/graph/jz_rich_demo_graph.dart';
 
 /// 渲染器
 abstract class JZRichGraphRenderer {
