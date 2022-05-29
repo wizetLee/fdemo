@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:fdemo/graph/jz_rich_demo_graph.dart';
+import 'package:fdemo/graph/jz_rich_graph.dart';
 import 'package:fdemo/graph/jz_rich_graph_renderer.dart';
 import 'package:fdemo/graph/jz_rich_graph_renderer_line.dart';
 
@@ -32,7 +32,8 @@ class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
     final now = DateTime.now();
     for (int i = 0; i < 100; i++) {
       final date = "${now.year}-${now.month}-${now.day + i}";
-      final model = JZRichGraphLineRendererValue(value: Random().nextDouble(), date: date);
+      final model = JZRichGraphLineRendererValue(
+          value: Random().nextInt(100).toDouble(), date: date);
       modelList.add(model);
     }
 
@@ -43,7 +44,6 @@ class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
               height: 150,
             ),
             Container(
-              // decoration: BoxDecoration(color: Colors.orange),
               child: JZRichGraph(
                 param: param,
                 renderer: JZRichGraphLineRenderer(models: modelList),

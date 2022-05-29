@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fdemo/graph/jz_rich_demo_graph.dart';
+import 'package:fdemo/graph/jz_rich_graph.dart';
 
 class JZRichGraphRenderWidget extends StatelessWidget {
   final JZRichGraphParam param;
