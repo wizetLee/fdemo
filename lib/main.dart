@@ -1,6 +1,8 @@
 import 'package:fdemo/graph/rich_graph_demo_route.dart';
 import 'package:flutter/material.dart';
 
+import 'route/JZRouteManager.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -17,6 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      navigatorKey: JZRouteManager.instance.navigatorKey,
     );
   }
 }
@@ -41,6 +44,20 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    /// 注册路由处
+    Map<String, PageBuilder> map = Map();
+    map["b"] = (url, params) {
+      return Container(
+        color: Colors.redAccent,
+      );
+    };
+    JZRouteManager.instance.registerRoutes(map);
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -93,6 +110,9 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     {
       final item = Item(title: "b");
+      item.action = () {
+        JZRouteManager.instance.showRoute("b", {});
+      };
       list.add(item);
     }
     return list;
@@ -100,9 +120,9 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class Item {
-  final title;
+  final String title;
   Function? action;
-  Item({this.title});
+  Item({required this.title});
 }
 
 class ListItem extends StatelessWidget {
@@ -124,7 +144,7 @@ class ListItem extends StatelessWidget {
           children: [
             Container(
               height: 44,
-              child: Text("xxx"),
+              child: Text(item.title),
             ),
             SizedBox(
               height: 0.5,
