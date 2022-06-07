@@ -1,3 +1,4 @@
+import 'package:fdemo/font/font_route.dart';
 import 'package:fdemo/graph/rich_graph_demo_route.dart';
 import 'package:fdemo/segment/jz_segment_view.dart';
 import 'package:flutter/material.dart';
@@ -68,6 +69,10 @@ class _MyHomePageState extends State<MyHomePage> {
             Divider(),
           ],
         ),
+    map["d"] = (url, params) {
+      return Container(
+        // child: JZSegmentView(tabs: ["1", "2", "3", "4", "5"]),
+        child: FontRoute(),
       );
     };
     JZRouteManager.instance.registerRoutes(map);
@@ -130,9 +135,16 @@ class _MyHomePageState extends State<MyHomePage> {
       list.add(item);
     }
     {
-      final item = Item(title: "一个无效的路路由： JZSegmentView");
+      final item = Item(title: "一个无效的路由： JZSegmentView");
       item.action = () {
         JZRouteManager.instance.showRoute("c", {});
+      };
+      list.add(item);
+    }
+    {
+      final item = Item(title: "d");
+      item.action = () {
+        JZRouteManager.instance.showRoute("d", {});
       };
       list.add(item);
     }
