@@ -1,4 +1,5 @@
 import 'package:fdemo/graph/rich_graph_demo_route.dart';
+import 'package:fdemo/segment/jz_segment_view.dart';
 import 'package:flutter/material.dart';
 
 import 'route/JZRouteManager.dart';
@@ -56,6 +57,19 @@ class _MyHomePageState extends State<MyHomePage> {
         color: Colors.redAccent,
       );
     };
+    map["c"] = (url, params) {
+      return Container(
+        color: Colors.white,
+        height: 50,
+        child: Column(
+          children: [
+            Container(height: 150),
+            JZSegmentView(tabs: ["阿萨姆拼凑", "奥斯蒂", "阿是蛮拼的吗", "现在才在"], initialIndex: 2,),
+            Divider(),
+          ],
+        ),
+      );
+    };
     JZRouteManager.instance.registerRoutes(map);
   }
 
@@ -97,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Item> list() {
     List<Item> list = [];
     {
-      final item = Item(title: "a");
+      final item = Item(title: "传统的跳转Navigator.push：Graph");
       item.action = () {
         Navigator.push(
           context,
@@ -109,9 +123,16 @@ class _MyHomePageState extends State<MyHomePage> {
       list.add(item);
     }
     {
-      final item = Item(title: "b");
+      final item = Item(title: "红色背景的路由");
       item.action = () {
         JZRouteManager.instance.showRoute("b", {});
+      };
+      list.add(item);
+    }
+    {
+      final item = Item(title: "一个无效的路路由： JZSegmentView");
+      item.action = () {
+        JZRouteManager.instance.showRoute("c", {});
       };
       list.add(item);
     }
@@ -144,9 +165,11 @@ class ListItem extends StatelessWidget {
           children: [
             Container(
               height: 44,
-              child: Text(item.title),
+              child: Center(
+                child: Text(item.title),
+              ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 0.5,
               child: Divider(
                 color: Colors.red,
