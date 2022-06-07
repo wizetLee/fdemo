@@ -87,3 +87,17 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+
+  # assets:
+    # - asset: assets/fonts
+  fonts:
+    - family: DINPro-Bold
+      fonts:
+        - asset: fonts/DINProBold.otf
+    - family: DINPro-Medium
+      fonts:
+        - asset: fonts/DINProMedium.otf
+    - family: DINPro-Regular
+      fonts:
+        - asset: fonts/DINProRegular.otf

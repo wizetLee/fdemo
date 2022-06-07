@@ -1,4 +1,6 @@
+import 'package:fdemo/font/font_route.dart';
 import 'package:fdemo/graph/rich_graph_demo_route.dart';
+import 'package:fdemo/segment/jz_segment_view.dart';
 import 'package:flutter/material.dart';
 
 import 'route/JZRouteManager.dart';
@@ -54,6 +56,13 @@ class _MyHomePageState extends State<MyHomePage> {
     map["b"] = (url, params) {
       return Container(
         color: Colors.redAccent,
+      );
+    };
+
+    map["c"] = (url, params) {
+      return Container(
+        // child: JZSegmentView(tabs: ["1", "2", "3", "4", "5"]),
+        child: FontRoute(),
       );
     };
     JZRouteManager.instance.registerRoutes(map);
@@ -112,6 +121,13 @@ class _MyHomePageState extends State<MyHomePage> {
       final item = Item(title: "b");
       item.action = () {
         JZRouteManager.instance.showRoute("b", {});
+      };
+      list.add(item);
+    }
+    {
+      final item = Item(title: "c");
+      item.action = () {
+        JZRouteManager.instance.showRoute("c", {});
       };
       list.add(item);
     }
