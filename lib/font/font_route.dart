@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+class FontRouteItem {
+  String title;
+  TextStyle style;
+  FontRouteItem({required this.title, required this.style});
+}
+
+
 class FontRoute extends StatefulWidget {
   const FontRoute({Key? key}) : super(key: key);
 
@@ -8,16 +15,6 @@ class FontRoute extends StatefulWidget {
 }
 
 class _FontRouteState extends State<FontRoute> {
-  // fonts:
-  //   - family: DINPro-Bold
-  //     fonts:
-  //       - asset: asset/fonts/DINProBold.otf
-  //   - family: DINPro-Medium
-  //     fonts:
-  //       - asset: assets/fonts/DINProMedium.otf
-  //   - family: DINPro-Regular
-  //     fonts:
-  //       - asset: assets/fonts/DINProRegular.otf
 
   var boldStyle = const TextStyle(
     fontFamily: 'DINPro-Bold',
@@ -33,32 +30,64 @@ class _FontRouteState extends State<FontRoute> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> titles = [
-      "1111",
-      "123123123123",
-      "sadasdasdsa",
-      "dpqwoeqpwonfdsobvxc",
-      ",./[]{}.,,.",
-      "的骚动牛皮的物品请大家去外婆额我去哦你骗我的"
-    ];
 
-    var style =
-        mediumStyle.copyWith(fontSize: 18, decoration: TextDecoration.none);
-    style =
-        regularStyle.copyWith(fontSize: 18, decoration: TextDecoration.none);
-    style = boldStyle.copyWith(fontSize: 18, decoration: TextDecoration.none);
-    style = TextStyle(fontSize: 18, decoration: TextDecoration.none);
+    List<FontRouteItem> items = [];
+    {
+      var title = "1234567890";
+      final bold = FontRouteItem(title: title, style: boldStyle);
+      items.add(bold);
+      final medium = FontRouteItem(title: title, style: mediumStyle);
+      items.add(medium);
+      final regular = FontRouteItem(title: title, style: regularStyle);
+      items.add(regular);
+      final normal = FontRouteItem(title: title, style: TextStyle());
+      items.add(normal);
+    }
+    {
+      var title = "!!@@##\$\$%%^^&&**（（））()__++--==";
+      final bold = FontRouteItem(title: title, style: boldStyle);
+      items.add(bold);
+      final medium = FontRouteItem(title: title, style: mediumStyle);
+      items.add(medium);
+      final regular = FontRouteItem(title: title, style: regularStyle);
+      items.add(regular);
+      final normal = FontRouteItem(title: title, style: TextStyle());
+      items.add(normal);
+    }
+    {
+      var title = "abcdefghijklmnopqrstuvwxyz";
+      final bold = FontRouteItem(title: title, style: boldStyle);
+      items.add(bold);
+      final medium = FontRouteItem(title: title, style: mediumStyle);
+      items.add(medium);
+      final regular = FontRouteItem(title: title, style: regularStyle);
+      items.add(regular);
+      final normal = FontRouteItem(title: title, style: TextStyle());
+      items.add(normal);
+    }
+    {
+      var title = "在线中文测试";
+      final bold = FontRouteItem(title: title, style: boldStyle);
+      items.add(bold);
+      final medium = FontRouteItem(title: title, style: mediumStyle);
+      items.add(medium);
+      final regular = FontRouteItem(title: title, style: regularStyle);
+      items.add(regular);
+      final normal = FontRouteItem(title: title, style: TextStyle());
+      items.add(normal);
+    }
     return Container(
+      color: Colors.white,
         child: ListView.builder(
       itemBuilder: (view, index) {
         return Container(
           child: Text(
-            titles[index],
-            style: style,
+            items[index].title,
+            style: items[index].style.copyWith(fontSize: 18, decoration: TextDecoration.none),
           ),
         );
       },
-      itemCount: titles.length,
+      itemCount: items.length,
     ));
   }
 }

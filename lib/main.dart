@@ -68,7 +68,9 @@ class _MyHomePageState extends State<MyHomePage> {
             JZSegmentView(tabs: ["阿萨姆拼凑", "奥斯蒂", "阿是蛮拼的吗", "现在才在"], initialIndex: 2,),
             Divider(),
           ],
-        ),
+        )
+      );
+    };
     map["d"] = (url, params) {
       return Container(
         // child: JZSegmentView(tabs: ["1", "2", "3", "4", "5"]),
