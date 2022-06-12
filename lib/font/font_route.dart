@@ -6,7 +6,6 @@ class FontRouteItem {
   FontRouteItem({required this.title, required this.style});
 }
 
-
 class FontRoute extends StatefulWidget {
   const FontRoute({Key? key}) : super(key: key);
 
@@ -15,7 +14,6 @@ class FontRoute extends StatefulWidget {
 }
 
 class _FontRouteState extends State<FontRoute> {
-
   var boldStyle = const TextStyle(
     fontFamily: 'DINPro-Bold',
   );
@@ -28,66 +26,90 @@ class _FontRouteState extends State<FontRoute> {
     fontFamily: 'DINPro-Regular',
   );
 
+  var textRegularStyle = const TextStyle(
+    fontFamily: 'SF UI Display',
+  );
+  var textMediumStyle =
+      const TextStyle(fontFamily: 'SF UI Display', fontWeight: FontWeight.w500);
+  var textBoldStyle =
+      const TextStyle(fontFamily: 'SF UI Display', fontWeight: FontWeight.w700);
+  var w100 = const TextStyle(fontWeight: FontWeight.w100);
+  var w200 = const TextStyle(fontWeight: FontWeight.w200);
+  var w300 = const TextStyle(fontWeight: FontWeight.w300);
+  var w400 = const TextStyle(fontWeight: FontWeight.w400);
+  var w500 = const TextStyle(fontWeight: FontWeight.w500);
+  var w600 = const TextStyle(fontWeight: FontWeight.w600);
+  var w700 = const TextStyle(fontWeight: FontWeight.w700);
+  var w800 = const TextStyle(fontWeight: FontWeight.w800);
+  var w900 = const TextStyle(fontWeight: FontWeight.w900);
+
   @override
   Widget build(BuildContext context) {
-
     List<FontRouteItem> items = [];
     {
       var title = "1234567890";
-      final bold = FontRouteItem(title: title, style: boldStyle);
-      items.add(bold);
-      final medium = FontRouteItem(title: title, style: mediumStyle);
-      items.add(medium);
-      final regular = FontRouteItem(title: title, style: regularStyle);
-      items.add(regular);
-      final normal = FontRouteItem(title: title, style: TextStyle());
-      items.add(normal);
+      this.add(items, title);
     }
     {
       var title = "!!@@##\$\$%%^^&&**（（））()__++--==";
-      final bold = FontRouteItem(title: title, style: boldStyle);
-      items.add(bold);
-      final medium = FontRouteItem(title: title, style: mediumStyle);
-      items.add(medium);
-      final regular = FontRouteItem(title: title, style: regularStyle);
-      items.add(regular);
-      final normal = FontRouteItem(title: title, style: TextStyle());
-      items.add(normal);
+      this.add(items, title);
     }
     {
       var title = "abcdefghijklmnopqrstuvwxyz";
-      final bold = FontRouteItem(title: title, style: boldStyle);
-      items.add(bold);
-      final medium = FontRouteItem(title: title, style: mediumStyle);
-      items.add(medium);
-      final regular = FontRouteItem(title: title, style: regularStyle);
-      items.add(regular);
-      final normal = FontRouteItem(title: title, style: TextStyle());
-      items.add(normal);
+      this.add(items, title);
     }
     {
       var title = "在线中文测试";
-      final bold = FontRouteItem(title: title, style: boldStyle);
-      items.add(bold);
-      final medium = FontRouteItem(title: title, style: mediumStyle);
-      items.add(medium);
-      final regular = FontRouteItem(title: title, style: regularStyle);
-      items.add(regular);
-      final normal = FontRouteItem(title: title, style: TextStyle());
-      items.add(normal);
+      this.add(items, title);
     }
     return Container(
-      color: Colors.white,
+        color: Colors.white,
         child: ListView.builder(
-      itemBuilder: (view, index) {
-        return Container(
-          child: Text(
-            items[index].title,
-            style: items[index].style.copyWith(fontSize: 18, decoration: TextDecoration.none),
-          ),
-        );
-      },
-      itemCount: items.length,
-    ));
+          itemBuilder: (view, index) {
+            return Container(
+              child: Text(
+                items[index].title,
+                style: items[index]
+                    .style
+                    .copyWith(fontSize: 40, decoration: TextDecoration.none),
+              ),
+            );
+          },
+          itemCount: items.length,
+        ));
+  }
+
+  void add(List<FontRouteItem> items, String title) {
+    final bold = FontRouteItem(title: title, style: boldStyle);
+    items.add(bold);
+    final medium = FontRouteItem(title: title, style: mediumStyle);
+    items.add(medium);
+    final regular = FontRouteItem(title: title, style: regularStyle);
+    items.add(regular);
+    final textBold = FontRouteItem(title: title, style: textBoldStyle);
+    items.add(textBold);
+    final textMedium = FontRouteItem(title: title, style: textMediumStyle);
+    items.add(textMedium);
+    final textRegular = FontRouteItem(title: title, style: textRegularStyle);
+    items.add(textRegular);
+
+    // final w100Item = FontRouteItem(title: title, style: w100);
+    // items.add(w100Item);
+    // final w200Item = FontRouteItem(title: title, style: w200);
+    // items.add(w200Item);
+    // final w300Item = FontRouteItem(title: title, style: w300);
+    // items.add(w300Item);
+    // final w400Item = FontRouteItem(title: title, style: w400);
+    // items.add(w400Item);
+    // final w500Item = FontRouteItem(title: title, style: w500);
+    // items.add(w500Item);
+    // final w600Item = FontRouteItem(title: title, style: w600);
+    // items.add(w600Item);
+    // final w700Item = FontRouteItem(title: title, style: w700);
+    // items.add(w700Item);
+    // final w800Item = FontRouteItem(title: title, style: w800);
+    // items.add(w800Item);
+    // final w900Item = FontRouteItem(title: title, style: w900);
+    // items.add(w900Item);
   }
 }
