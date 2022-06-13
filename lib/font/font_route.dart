@@ -33,15 +33,24 @@ class _FontRouteState extends State<FontRoute> {
       const TextStyle(fontFamily: 'SF UI Display', fontWeight: FontWeight.w500);
   var textBoldStyle =
       const TextStyle(fontFamily: 'SF UI Display', fontWeight: FontWeight.w700);
-  var w100 = const TextStyle(fontWeight: FontWeight.w100);
-  var w200 = const TextStyle(fontWeight: FontWeight.w200);
-  var w300 = const TextStyle(fontWeight: FontWeight.w300);
-  var w400 = const TextStyle(fontWeight: FontWeight.w400);
-  var w500 = const TextStyle(fontWeight: FontWeight.w500);
-  var w600 = const TextStyle(fontWeight: FontWeight.w600);
-  var w700 = const TextStyle(fontWeight: FontWeight.w700);
-  var w800 = const TextStyle(fontWeight: FontWeight.w800);
-  var w900 = const TextStyle(fontWeight: FontWeight.w900);
+  var w100 = const TextStyle(
+      fontWeight: FontWeight.w100, fontFamilyFallback: ["PingFang SC"]);
+  var w200 = const TextStyle(
+      fontWeight: FontWeight.w200, fontFamilyFallback: ["PingFang SC"]);
+  var w300 = const TextStyle(
+      fontWeight: FontWeight.w300, fontFamilyFallback: ["PingFang SC"]);
+  var w400 = const TextStyle(
+      fontWeight: FontWeight.w400, fontFamilyFallback: ["PingFang SC"]);
+  var w500 = const TextStyle(
+      fontWeight: FontWeight.w500, fontFamilyFallback: ["PingFang SC"]);
+  var w600 = const TextStyle(
+      fontWeight: FontWeight.w600, fontFamilyFallback: ["PingFang SC"]);
+  var w700 = const TextStyle(
+      fontWeight: FontWeight.w700, fontFamilyFallback: ["PingFang SC"]);
+  var w800 = const TextStyle(
+      fontWeight: FontWeight.w800, fontFamilyFallback: ["PingFang SC"]);
+  var w900 = const TextStyle(
+      fontWeight: FontWeight.w900, fontFamilyFallback: ["PingFang SC"]);
 
   @override
   Widget build(BuildContext context) {
@@ -93,23 +102,23 @@ class _FontRouteState extends State<FontRoute> {
     final textRegular = FontRouteItem(title: title, style: textRegularStyle);
     items.add(textRegular);
 
-    // final w100Item = FontRouteItem(title: title, style: w100);
-    // items.add(w100Item);
-    // final w200Item = FontRouteItem(title: title, style: w200);
-    // items.add(w200Item);
-    // final w300Item = FontRouteItem(title: title, style: w300);
-    // items.add(w300Item);
-    // final w400Item = FontRouteItem(title: title, style: w400);
-    // items.add(w400Item);
-    // final w500Item = FontRouteItem(title: title, style: w500);
-    // items.add(w500Item);
-    // final w600Item = FontRouteItem(title: title, style: w600);
-    // items.add(w600Item);
-    // final w700Item = FontRouteItem(title: title, style: w700);
-    // items.add(w700Item);
-    // final w800Item = FontRouteItem(title: title, style: w800);
-    // items.add(w800Item);
-    // final w900Item = FontRouteItem(title: title, style: w900);
-    // items.add(w900Item);
+    final w100Item = FontRouteItem(title: title, style: w100);
+    items.add(w100Item);
+    final w200Item = FontRouteItem(title: title, style: w200);
+    items.add(w200Item);
+    final w300Item = FontRouteItem(title: title, style: w300);
+    items.add(w300Item);
+    final w400Item = FontRouteItem(title: title, style: w400);
+    items.add(w400Item);
+    final w500Item = FontRouteItem(title: title, style: w500);
+    items.add(w500Item);
+    final w600Item = FontRouteItem(title: title, style: w600);
+    items.add(w600Item);
+    final w700Item = FontRouteItem(title: title, style: w700);
+    items.add(w700Item);
+    final w800Item = FontRouteItem(title: title, style: w800);
+    items.add(w800Item);
+    final w900Item = FontRouteItem(title: title, style: w900);
+    items.add(w900Item);
   }
 }
