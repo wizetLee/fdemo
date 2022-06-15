@@ -80,7 +80,7 @@ class _FontRouteState extends State<FontRoute> {
                 items[index].title,
                 style: items[index]
                     .style
-                    .copyWith(fontSize: 40, decoration: TextDecoration.none),
+                    .copyWith(fontSize: 20, decoration: TextDecoration.none),
               ),
             );
           },

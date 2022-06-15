@@ -1,8 +1,10 @@
 import 'package:fdemo/font/font_route.dart';
 import 'package:fdemo/graph/rich_graph_demo_route.dart';
-import 'package:fdemo/segment/jz_segment_view.dart';
+import 'package:fdemo/segment/jz_segmented_view.dart';
 import 'package:flutter/material.dart';
 
+import 'life_cycle/app_life_cycle.dart';
+import 'life_cycle/app_life_cycle2.dart';
 import 'route/JZRouteManager.dart';
 
 void main() {
@@ -65,7 +67,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             Container(height: 150),
-            JZSegmentView(tabs: ["阿萨姆拼凑", "奥斯蒂", "阿是蛮拼的吗", "现在才在"], initialIndex: 2,),
+            JZSegmentedView(tabs: ["阿萨姆拼凑", "奥斯蒂", "阿是蛮拼的吗", "现在才在"], initialIndex: 2, onTap: (index) {
+              if (index == 2) {
+                return false;
+              }
+              return true;
+            },),
             Divider(),
           ],
         )
@@ -76,6 +83,12 @@ class _MyHomePageState extends State<MyHomePage> {
         // child: JZSegmentView(tabs: ["1", "2", "3", "4", "5"]),
         child: FontRoute(),
       );
+    };
+    map["AppLifecycle"] = (url, params) {
+      return AppLifecycle();
+    };
+    map["AppLifecycle2"] = (url, params) {
+      return AppLifecycle2();
     };
     JZRouteManager.instance.registerRoutes(map);
   }
@@ -144,9 +157,16 @@ class _MyHomePageState extends State<MyHomePage> {
       list.add(item);
     }
     {
-      final item = Item(title: "d");
+      final item = Item(title: "文字检查");
       item.action = () {
         JZRouteManager.instance.showRoute("d", {});
+      };
+      list.add(item);
+    }
+    {
+      final item = Item(title: "AppLifecycle");
+      item.action = () {
+        JZRouteManager.instance.showRoute("AppLifecycle", {});
       };
       list.add(item);
     }
