@@ -1,11 +1,13 @@
 import 'package:fdemo/font/font_route.dart';
 import 'package:fdemo/graph/rich_graph_demo_route.dart';
 import 'package:fdemo/segment/jz_segmented_view.dart';
+import 'package:fdemo/system_lib_test/system_lib_test.dart';
 import 'package:flutter/material.dart';
-
 import 'life_cycle/app_life_cycle.dart';
 import 'life_cycle/app_life_cycle2.dart';
 import 'route/JZRouteManager.dart';
+
+
 
 void main() {
   runApp(const MyApp());
@@ -90,6 +92,9 @@ class _MyHomePageState extends State<MyHomePage> {
     map["AppLifecycle2"] = (url, params) {
       return AppLifecycle2();
     };
+    map["SystemLibTest"] = (url, params) {
+      return SystemLibTestRoute();
+    };
     JZRouteManager.instance.registerRoutes(map);
   }
 
@@ -131,6 +136,13 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Item> list() {
     List<Item> list = [];
     {
+      final item = Item(title: "系统API测试");
+      item.action = () {
+        JZRouteManager.instance.showRoute("SystemLibTest", {});
+      };
+      list.add(item);
+    }
+    {
       final item = Item(title: "传统的跳转Navigator.push：Graph");
       item.action = () {
         Navigator.push(
@@ -170,6 +182,8 @@ class _MyHomePageState extends State<MyHomePage> {
       };
       list.add(item);
     }
+
+
     return list;
   }
 }

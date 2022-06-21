@@ -41,6 +41,12 @@ class _AppLifecycleState extends State<AppLifecycle>
   @override
   Widget build(BuildContext context) {
     print(' sub build');
+
+    var temp = List<Widget?>.filled(3, null);
+    var c = Container();
+    temp[0] = c;
+    temp[1] = c;
+    print(temp.length);
      return Scaffold(
        // appBar: ,
          body: GestureDetector(
