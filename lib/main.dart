@@ -3,6 +3,7 @@ import 'package:fdemo/graph/rich_graph_demo_route.dart';
 import 'package:fdemo/segment/jz_segmented_view.dart';
 import 'package:flutter/material.dart';
 
+import 'key/positioned_tiles.dart';
 import 'life_cycle/app_life_cycle.dart';
 import 'life_cycle/app_life_cycle2.dart';
 import 'route/JZRouteManager.dart';
@@ -90,6 +91,11 @@ class _MyHomePageState extends State<MyHomePage> {
     map["AppLifecycle2"] = (url, params) {
       return AppLifecycle2();
     };
+
+    map["PositionedTiles"] = (url, params) {
+      return PositionedTiles();
+    };
+    
     JZRouteManager.instance.registerRoutes(map);
   }
 
@@ -170,6 +176,14 @@ class _MyHomePageState extends State<MyHomePage> {
       };
       list.add(item);
     }
+    {
+      final item = Item(title: "PositionedTiles");
+      item.action = () {
+        JZRouteManager.instance.showRoute("PositionedTiles", {});
+      };
+      list.add(item);
+    }
+    
     return list;
   }
 }
