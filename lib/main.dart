@@ -1,13 +1,12 @@
 import 'package:fdemo/font/font_route.dart';
 import 'package:fdemo/graph/rich_graph_demo_route.dart';
+import 'package:fdemo/provider/provider_test.dart';
 import 'package:fdemo/segment/jz_segmented_view.dart';
 import 'package:fdemo/system_lib_test/system_lib_test.dart';
 import 'package:flutter/material.dart';
 import 'life_cycle/app_life_cycle.dart';
 import 'life_cycle/app_life_cycle2.dart';
 import 'route/JZRouteManager.dart';
-
-
 
 void main() {
   runApp(const MyApp());
@@ -64,21 +63,24 @@ class _MyHomePageState extends State<MyHomePage> {
     };
     map["c"] = (url, params) {
       return Container(
-        color: Colors.white,
-        height: 50,
-        child: Column(
-          children: [
-            Container(height: 150),
-            JZSegmentedView(tabs: ["阿萨姆拼凑", "奥斯蒂", "阿是蛮拼的吗", "现在才在"], initialIndex: 2, onTap: (index) {
-              if (index == 2) {
-                return false;
-              }
-              return true;
-            },),
-            Divider(),
-          ],
-        )
-      );
+          color: Colors.white,
+          height: 50,
+          child: Column(
+            children: [
+              Container(height: 150),
+              JZSegmentedView(
+                tabs: ["阿萨姆拼凑", "奥斯蒂", "阿是蛮拼的吗", "现在才在"],
+                initialIndex: 2,
+                onTap: (index) {
+                  if (index == 2) {
+                    return false;
+                  }
+                  return true;
+                },
+              ),
+              Divider(),
+            ],
+          ));
     };
     map["d"] = (url, params) {
       return Container(
@@ -95,6 +97,10 @@ class _MyHomePageState extends State<MyHomePage> {
     map["SystemLibTest"] = (url, params) {
       return SystemLibTestRoute();
     };
+    map["ProviderTest"] = (url, params) {
+      return ProviderTestRoute();
+    };
+
     JZRouteManager.instance.registerRoutes(map);
   }
 
@@ -135,6 +141,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Item> list() {
     List<Item> list = [];
+
+    {
+      final item = Item(title: "ProviderTest");
+      item.action = () {
+        JZRouteManager.instance.showRoute("ProviderTest", {});
+      };
+      list.add(item);
+    }
     {
       final item = Item(title: "系统API测试");
       item.action = () {
@@ -182,7 +196,6 @@ class _MyHomePageState extends State<MyHomePage> {
       };
       list.add(item);
     }
-
 
     return list;
   }
