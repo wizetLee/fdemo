@@ -2,6 +2,20 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+
+/*
+ListView
+  Card
+    ListTitle
+
+
+动画部分
+https://segmentfault.com/a/1190000022821675 
+
+
+*/
+
+
 /*
 ValueKey
 Objectkey

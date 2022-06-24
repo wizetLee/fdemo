@@ -22,6 +22,15 @@ class _ProviderTestRouteState extends State<ProviderTestRoute> {
     //   ),
     // );
 
+    ValueNotifier<String> n = ValueNotifier("cxx");
+    n.value = "c";
+    final widget = ValueListenableBuilder(
+        valueListenable: n,
+        builder: (context, value, child) {
+          print("value change = ${value}");
+          return Container();
+        });
+
     // 监听的对象啊
     return Container(
       color: Colors.white,
@@ -69,7 +78,6 @@ class _TmpStatefulState extends State<TmpStateful> {
   }
 }
 
-
 class Counter with ChangeNotifier {
   int _count;
   Counter(this._count);
@@ -88,7 +96,6 @@ class Counter with ChangeNotifier {
     return _count;
   }
 }
-
 
 class ProvidersDemo extends StatelessWidget {
   const ProvidersDemo({Key? key}) : super(key: key);
