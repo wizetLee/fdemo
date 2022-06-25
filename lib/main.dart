@@ -1,3 +1,4 @@
+import 'package:fdemo/annotate/annotate_route.dart';
 import 'package:fdemo/font/font_route.dart';
 import 'package:fdemo/graph/rich_graph_demo_route.dart';
 import 'package:fdemo/provider/provider_test.dart';
@@ -104,6 +105,9 @@ class _MyHomePageState extends State<MyHomePage> {
     map["ProviderTest"] = (url, params) {
       return ProviderTestRoute();
     };
+map["annotate"] = (url, params) {
+      return AnnotateRoute();
+    };
 
     JZRouteManager.instance.registerRoutes(map);
   }
@@ -205,6 +209,13 @@ class _MyHomePageState extends State<MyHomePage> {
       final item = Item(title: "PositionedTiles");
       item.action = () {
         JZRouteManager.instance.showRoute("PositionedTiles", {});
+      };
+      list.add(item);
+    }
+    {
+      final item = Item(title: "annotate");
+      item.action = () {
+        JZRouteManager.instance.showRoute("annotate", {});
       };
       list.add(item);
     }

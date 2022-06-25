@@ -1,5 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:build/build.dart' as Bulid;
+import 'package:analyzer/dart/element/element.dart';
 
 /// Provider 的使用
 class ProviderTestRoute extends StatefulWidget {
@@ -10,36 +15,41 @@ class ProviderTestRoute extends StatefulWidget {
 }
 
 class _ProviderTestRouteState extends State<ProviderTestRoute> {
-  // var _inner = Counter(0);
+  var _inner = Counter(0);
+  ValueNotifier<String> valueNTest = ValueNotifier("c");
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   appBar: AppBar(title: const Text('Provider Demo')),
-    //   body: ChangeNotifierProvider(
-    //     lazy: true,
-    //     create: (BuildContext context) => NotifierCounter(),
-    //     child: const ProvidersDemo(),
-    //   ),
-    // );
-
     ValueNotifier<String> n = ValueNotifier("cxx");
-    n.value = "c";
-    final widget = ValueListenableBuilder(
-        valueListenable: n,
-        builder: (context, value, child) {
-          print("value change = ${value}");
-          return Container();
-        });
+    // n.value = "c";
+    // final widget = ValueListenableBuilder(
+    //     valueListenable: n,
+    //     builder: (context, value, child) {
+    //       return Container(
+    //         child: GestureDetector(
+    //           child: Text(n.value),
+    //           onTap: () {
+    //             n.value = "1";
+    //           },
+    //         ),
+    //       );
+    //     });
+    // return widget;
 
     // 监听的对象啊
     return Container(
       color: Colors.white,
       child: ChangeNotifierProvider(
-        create: (BuildContext context) => Counter(0),
+        create: (BuildContext context) => _inner,
         child: TmpStateful(),
         lazy: true,
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    valueNTest.dispose();
   }
 }
 
@@ -53,29 +63,32 @@ class TmpStateful extends StatefulWidget {
 class _TmpStatefulState extends State<TmpStateful> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-            height: 50,
-            child: Consumer(
+    return ListView.builder(
+      itemBuilder: (context, intdex) {
+        return Card(
+          child: ListTile(
+            leading: Icon(Icons.ac_unit),
+            title: Consumer(
               builder: (BuildContext context, Counter counter, child) {
-                return Text('${Provider.of<Counter>(context).count}',
-                    style: const TextStyle(fontSize: 45));
+                return Text(
+                  '${Provider.of<Counter>(context).count}',
+                  style: const TextStyle(
+                      fontSize: 20, decoration: TextDecoration.none),
+                );
               },
-            )),
-        GestureDetector(
-          onTap: () {
-            print("xxx");
-            context.read<Counter>().add();
-          },
-          child: Container(
-            height: 44,
-            color: Colors.orange,
+            ),
+            trailing: Icon(Icons.abc),
+            onTap: () {
+              context.read<Counter>().add();
+            },
+            onLongPress: () {},
           ),
-        )
-      ],
+        );
+      },
     );
   }
+
+  void _onTap() {}
 }
 
 class Counter with ChangeNotifier {
@@ -147,3 +160,24 @@ class NotifierCounter with ChangeNotifier {
     notifyListeners();
   }
 }
+
+
+
+
+
+
+
+
+
+// class TestBuilder extends Bulid.Builder {
+
+//   @override
+//   FutureOr<void> build(Bulid.BuildStep buildStep) {
+//     // TODO: implement build
+//     throw UnimplementedError();
+//   }
+
+//   @override
+//   // TODO: implement buildExtensions
+//   Map<String, List<String>> get buildExtensions => throw UnimplementedError();
+// }

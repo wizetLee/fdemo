@@ -8,11 +8,8 @@ ListView
   Card
     ListTitle
 
-
 动画部分
 https://segmentfault.com/a/1190000022821675 
-
-
 */
 
 
@@ -24,6 +21,7 @@ PageStoragekey
 GlobalKey
 */
 
+/// 状态管理的设定
 class PositionedTiles extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => PositionedTilesState();
@@ -105,6 +103,7 @@ class _MyStatefulColorfultileWidgetState
 
   @override
   Widget build(BuildContext context) {
+     
     return Container(
         color: myColor,
         child: Padding(
