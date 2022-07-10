@@ -375,14 +375,9 @@ class JZRGLinesPainter extends CustomPainter {
         // 位置计算
         if (element.lines.length > 1) {
           Offset? from = null;
+
+          double? shouldLocationInX;
           for (int i = 0; i < visibleCount; i++) {
-            {
-              if (this.param.locationIn == i && (didDrawLocationIn == false)) {
-                canvas.drawLine(Offset(startX, 0),
-                    Offset(startX, renderSize.height), LocationInLinePaint);
-                didDrawLocationIn = true;
-              }
-            }
 
             if (lines.length > i) {
               /// 得到绘制的坐标
@@ -397,8 +392,24 @@ class JZRGLinesPainter extends CustomPainter {
               }
               startX = startX + widthPerItem;
             }
+            {
+              if (this.param.locationIn == i && (didDrawLocationIn == false)) {
+                shouldLocationInX = startX;
+                didDrawLocationIn = true;
+              }
+            }
           }
-        } else if (lines.length == 1) {}
+
+          if (shouldLocationInX != null) {
+            canvas.drawLine(Offset(shouldLocationInX, param.padding.top),
+                Offset(shouldLocationInX, param.padding.top + renderSize.height), LocationInLinePaint);
+          }
+
+        } else if (lines.length == 1) {
+
+          //FIXME: 一条线的时候也需要处理
+
+        }
       }
     });
   }

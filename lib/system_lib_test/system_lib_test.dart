@@ -17,7 +17,10 @@ class _SystemLibTestRouteState extends State<SystemLibTestRoute> {
     // List<int> list = [1, 2, 3, 4, 5];
     // var target = list.sublist(1, 10);
 
-
+    Map<String, dynamic> json = {
+    "stock_list": ["SZ301002","SZ000591","SH603109","SH688345","SZ300582","SZ000931","SZ300988","SZ002931","SH688616","SZ001696"]};
+    var stockList = json['stock_list'].cast<String>();
+    print("object = ${stockList}");
     convertTest();
 
     return Container(color: Colors.orange,);

@@ -1,3 +1,4 @@
+import 'package:fdemo/animation/animation_route.dart';
 import 'package:fdemo/annotate/annotate_route.dart';
 import 'package:fdemo/font/font_route.dart';
 import 'package:fdemo/graph/rich_graph_demo_route.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'key/positioned_tiles.dart';
 import 'life_cycle/app_life_cycle.dart';
 import 'life_cycle/app_life_cycle2.dart';
+import 'mobx/mobx_route.dart';
 import 'route/JZRouteManager.dart';
 
 void main() {
@@ -105,8 +107,14 @@ class _MyHomePageState extends State<MyHomePage> {
     map["ProviderTest"] = (url, params) {
       return ProviderTestRoute();
     };
-map["annotate"] = (url, params) {
+    map["annotate"] = (url, params) {
       return AnnotateRoute();
+    };
+    map["AnimationRoute"] = (url, params) {
+      return AnimationRoute();
+    };
+    map["MobxRoute"] = (url, params) {
+      return MobxRoute();
     };
 
     JZRouteManager.instance.registerRoutes(map);
@@ -213,13 +221,27 @@ map["annotate"] = (url, params) {
       list.add(item);
     }
     {
-      final item = Item(title: "annotate");
+      final item = Item(title: "注解");
       item.action = () {
         JZRouteManager.instance.showRoute("annotate", {});
       };
       list.add(item);
     }
-    
+    {
+      final item = Item(title: "AnimationRoute");
+      item.action = () {
+        JZRouteManager.instance.showRoute("AnimationRoute", {});
+      };
+      list.add(item);
+    }
+    {
+      final item = Item(title: "MobxRoute");
+      item.action = () {
+        JZRouteManager.instance.showRoute("MobxRoute", {});
+      };
+      list.add(item);
+    }
+
     return list;
   }
 }

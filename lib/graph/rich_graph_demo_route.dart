@@ -19,25 +19,30 @@ class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
     var padding = EdgeInsets.zero;
     padding = EdgeInsets.fromLTRB(15, 15, 15, 15);
     var param = JZRichGraphParam(
+        leftDividingRuleOffset: 0,
+      rightDividingRuleOffset: 0,
+      // leftDividingRuleWidth: 0,
+      // rightDividingRuleWidth: 0,
         width: MediaQuery.of(context).size.width,
         height: 400,
         padding: padding,
-        visibleCount: 10,
-      renderPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        visibleCount: 10000,
+      // renderPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
         );
 
 
     List<JZRichGraphLineRendererValue> modelList = [];
 
     final now = DateTime.now();
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 10000; i++) {
       final date = "${now.year}-${now.month}-${now.day + i}";
       final model = JZRichGraphLineRendererValue(
-          value: Random().nextInt(100).toDouble(), date: date);
+          value: Random().nextInt(10000).toDouble(), date: date);
       modelList.add(model);
     }
 
-    return Container(
+    return SingleChildScrollView(child: Container(
+      height: 1000,
         child: Column(
           children: [
             Container(
@@ -52,6 +57,6 @@ class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
             Container(),
           ],
         ),
-        color: Colors.white);
+        color: Colors.white),);
   }
 }
