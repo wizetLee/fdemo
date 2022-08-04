@@ -17,6 +17,7 @@ class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
   @override
   Widget build(BuildContext context) {
     var padding = EdgeInsets.zero;
+    int count = 10;
     padding = EdgeInsets.fromLTRB(15, 15, 15, 15);
     var param = JZRichGraphParam(
         leftDividingRuleOffset: 0,
@@ -26,7 +27,7 @@ class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
         width: MediaQuery.of(context).size.width,
         height: 400,
         padding: padding,
-        visibleCount: 10000,
+        visibleCount: count,
       // renderPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
         );
 
@@ -34,10 +35,10 @@ class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
     List<JZRichGraphLineRendererValue> modelList = [];
 
     final now = DateTime.now();
-    for (int i = 0; i < 10000; i++) {
+    for (int i = 0; i < count; i++) {
       final date = "${now.year}-${now.month}-${now.day + i}";
       final model = JZRichGraphLineRendererValue(
-          value: Random().nextInt(10000).toDouble(), date: date);
+          value: Random().nextInt(count).toDouble(), date: date);
       modelList.add(model);
     }
 

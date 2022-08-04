@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 
@@ -22,6 +23,21 @@ class _SystemLibTestRouteState extends State<SystemLibTestRoute> {
     var stockList = json['stock_list'].cast<String>();
     print("object = ${stockList}");
     convertTest();
+
+    var c = "IX9074326";
+    var c1 = "IX907";
+
+    if (c.contains(c1)) {
+      print("gou");
+    } else {
+      print("x");
+    }
+
+
+    var p = Platform();
+    print(Platform.environment);
+    print(Platform.operatingSystem);
+    print(Platform.operatingSystemVersion);
 
     return Container(color: Colors.orange,);
   }
