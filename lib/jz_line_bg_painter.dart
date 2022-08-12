@@ -5,8 +5,8 @@ import 'dart:math';
 class JZLineBGPainter extends CustomPainter {
   EdgeInsets padding;
   int count;
-  double gap = 3;
-  JZLineBGPainter({required this.padding, required this.count});
+  double gap;
+  JZLineBGPainter({required this.count, this.padding = EdgeInsets.zero, this.gap = 3.0});
 
   @override
   bool shouldRepaint(JZLineBGPainter oldDelegate) {
@@ -15,7 +15,6 @@ class JZLineBGPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    //240分钟，显示每分钟的数据
 
     final double strokeWidth = 1;
     final color = Colors.grey;

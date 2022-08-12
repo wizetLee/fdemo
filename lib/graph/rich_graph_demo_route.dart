@@ -29,6 +29,7 @@ class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
       height: 400,
       padding: padding,
       visibleCount: count,
+      dividingRuleCount:  7,
       // renderPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
     );
 
