@@ -51,6 +51,31 @@ class _SystemLibTestRouteState extends State<SystemLibTestRoute> {
     print("Platform.pathSeparator = ${Platform.pathSeparator}");
     print("Platform.numberOfProcessors = ${Platform.numberOfProcessors}");
 
+    var curIndex = 2;
+    List<int> rankRowDataList = [1, 2, 3, 4,5, 6, 7, 8, 9];
+    List<int>  targetRowDataList = [];
+    if (rankRowDataList.length <= 3) {
+      targetRowDataList = rankRowDataList;
+    } else {
+      if (curIndex == 1 || curIndex == 4 || curIndex == 7) {
+        targetRowDataList = rankRowDataList.getRange(0, 3).toList();
+      } else if (curIndex == 2 || curIndex == 5 || curIndex == 8) {
+        if (targetRowDataList.length > 5) {
+          targetRowDataList = rankRowDataList.getRange(3, 6).toList();
+        } else {
+          targetRowDataList = rankRowDataList.getRange((rankRowDataList.length - 3), rankRowDataList.length).toList();
+        }
+      } else if (curIndex == 3 || curIndex == 6 || curIndex == 9) {
+        if (targetRowDataList.length > 8) {
+          targetRowDataList = rankRowDataList.sublist(6, 9);
+        } else {
+          targetRowDataList = rankRowDataList.getRange((rankRowDataList.length - 3), rankRowDataList.length).toList();
+        }
+      }
+    }
+
+    print("targetRowDataList = ${targetRowDataList}");
+
     return Container(color: Colors.orange,);
   }
 

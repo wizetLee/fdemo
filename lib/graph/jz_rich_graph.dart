@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fdemo/graph/jz_rich_graph_renderer.dart';
-import 'package:fdemo/graph/jz_rich_graph_render_widget.dart';
 
 enum JZRichGraphDividingRuleDistribution {
   /// 同dividingRuleCount位置
@@ -146,10 +145,6 @@ class JZRichGraph extends StatefulWidget {
 }
 
 class _JZRichGraphState extends State<JZRichGraph> {
-  late JZRichGraphRenderWidget renderView = JZRichGraphRenderWidget(
-    param: this.widget.param,
-  );
-
   Offset? localPosition;
   int? locationIn;
 
@@ -190,10 +185,7 @@ class _JZRichGraphState extends State<JZRichGraph> {
 
   /// 头部内容
   Widget _bulidHeader() {
-    return this
-            .widget
-            .renderer
-            .getGestureRenderResult(param: this.rendererParam) ??
+    return this.widget.renderer.getHeaderResult(param: this.rendererParam) ??
         Container();
   }
 
@@ -208,7 +200,13 @@ class _JZRichGraphState extends State<JZRichGraph> {
         param.rightDividingRuleOffset,
         0);
     final children = _buildRenderWidget();
-    final leftRightRule = _buildLeftRightRule();
+    // final leftRightRule = _buildLeftRightRule();
+    var leftRule =
+        this.widget.renderer.getLeftRule(param: this.rendererParam) ??
+            Container();
+    var rightRule =
+        this.widget.renderer.getRightRule(param: this.rendererParam) ??
+            Container();
     return Expanded(
         child: Row(
       children: [
@@ -224,10 +222,14 @@ class _JZRichGraphState extends State<JZRichGraph> {
                         children: [children],
                       ),
                     ),
-                    Positioned(child: leftRightRule[0], left: 0),
-                    Positioned(child: leftRightRule[1], right: 0),
+                    Positioned(child: leftRule, left: 0),
+                    Positioned(child: rightRule, right: 0),
                     Positioned(
-                      child: _buildBottom(),
+                      child: this
+                              .widget
+                              .renderer
+                              .getBottomResult(param: this.rendererParam) ??
+                          Container(),
                       left: param.leftDividingRuleOffset,
                       bottom: 0,
                     )
@@ -238,101 +240,7 @@ class _JZRichGraphState extends State<JZRichGraph> {
   }
 }
 
-extension SubWidget on _JZRichGraphState {
-  List<Widget> _buildLeftRightRule() {
-    print("_buildLeftRightRule");
-    final param = widget.param;
-    final getLeftRichText =
-        this.widget.renderer.getLeftRichText(param: this.rendererParam);
-    final getRightRichText =
-        this.widget.renderer.getRightRichText(param: this.rendererParam);
-    List<Widget> leftLabels = [];
-    List<Widget> rightLabels = [];
-
-    final dividingRuleCount = param.dividingRuleCount;
-    for (int i = 0; i < dividingRuleCount; i++) {
-      {
-        final alignment = param.leftDividingRuleAlignment;
-        if (getLeftRichText.length > i) {
-          leftLabels.add(Container(
-            child: RichText(
-              text: getLeftRichText[i],
-              textAlign: alignment,
-            ),
-          ));
-        } else {
-          leftLabels
-              .add(RichText(text: TextSpan(text: "--"), textAlign: alignment));
-        }
-      }
-
-      {
-        final alignment = param.rightDividingRuleAlignment;
-        if (getRightRichText.length > i) {
-          rightLabels
-              .add(RichText(text: getRightRichText[i], textAlign: alignment));
-        } else {
-          rightLabels
-              .add(RichText(text: TextSpan(text: "--"), textAlign: alignment));
-        }
-      }
-    }
-    final height = param.getRenderSize().height;
-    var dividingRuleLeft = Container(
-      height: height,
-      color: Colors.transparent,
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: leftLabels),
-    );
-    var dividingRuleRight = Container(
-      height: height,
-      color: Colors.transparent,
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: rightLabels),
-    );
-    return [
-      IgnorePointer(
-        child: dividingRuleLeft,
-        ignoring: true,
-      ),
-      IgnorePointer(child: dividingRuleRight, ignoring: true)
-    ];
-  }
-
-  Widget _buildBottom() {
-    print("_buildBottom");
-    final getBottomRichText =
-        this.widget.renderer.getBottomRichText(param: this.rendererParam);
-    final first = (getBottomRichText.isNotEmpty)
-        ? getBottomRichText[0]
-        : const TextSpan(text: "--");
-    final second = (getBottomRichText.length > 1)
-        ? getBottomRichText[1]
-        : const TextSpan(text: "--");
-    final third = (getBottomRichText.length > 2)
-        ? getBottomRichText[2]
-        : const TextSpan(text: "--");
-
-    final width = this.widget.param.getRenderSize().width;
-    return Container(
-      width: width,
-      alignment: Alignment.center,
-      height: this.widget.param.bottomTextHeight,
-      color: Colors.pink,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          RichText(text: first, textAlign: TextAlign.left),
-          RichText(text: second, textAlign: TextAlign.center),
-          RichText(text: third, textAlign: TextAlign.right)
-        ],
-      ),
-    );
-  }
-
+extension _JZRichGraphStateSubWidget on _JZRichGraphState {
   /// 绘图部分
   Widget _buildRenderWidget() {
     print("_buildRenderWidget");
@@ -367,9 +275,6 @@ extension SubWidget on _JZRichGraphState {
       },
       onLongPressCancel: () {
         _clean();
-      },
-      onLongPressDown: (detail) {
-        _gestureAction(detail.localPosition, renderSize);
       },
       onLongPressStart: (detail) {
         _gestureAction(detail.localPosition, renderSize);
