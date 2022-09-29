@@ -4,12 +4,14 @@ import 'package:fdemo/font/font_route.dart';
 import 'package:fdemo/graph/rich_graph_demo_route.dart';
 import 'package:fdemo/provider/provider_test.dart';
 import 'package:fdemo/segment/jz_segmented_view.dart';
+import 'package:fdemo/slider/slider_route.dart';
 import 'package:fdemo/system_lib_test/system_lib_test.dart';
 import 'package:flutter/material.dart';
 import 'key/positioned_tiles.dart';
 import 'life_cycle/app_life_cycle.dart';
 import 'life_cycle/app_life_cycle2.dart';
 import 'mobx/mobx_route.dart';
+import 'nest_scroll_view/nest_scroll_view_route.dart';
 import 'route/JZRouteManager.dart';
 
 void main() {
@@ -115,6 +117,12 @@ class _MyHomePageState extends State<MyHomePage> {
     };
     map["MobxRoute"] = (url, params) {
       return MobxRoute();
+    };
+    map["Slider"] = (url, params) {
+      return SliderRoute();
+    };
+    map["NestScrollViewRoute"] = (url, params) {
+      return NestScrollViewRoute();
     };
 
     JZRouteManager.instance.registerRoutes(map);
@@ -238,6 +246,20 @@ class _MyHomePageState extends State<MyHomePage> {
       final item = Item(title: "MobxRoute");
       item.action = () {
         JZRouteManager.instance.showRoute("MobxRoute", {});
+      };
+      list.add(item);
+    }
+    {
+      final item = Item(title: "Slider");
+      item.action = () {
+        JZRouteManager.instance.showRoute("Slider", {});
+      };
+      list.add(item);
+    }
+    {
+      final item = Item(title: "NestScrollViewRoute");
+      item.action = () {
+        JZRouteManager.instance.showRoute("NestScrollViewRoute", {});
       };
       list.add(item);
     }

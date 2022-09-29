@@ -51,6 +51,18 @@ dev_dependencies:
 
   mobx_codegen: ^2.0.4
 
+#https://pub.flutter-io.cn/packages/like_button
+  like_button: 2.0.4
+
+##https://pub.dev/packages/extended_image_library
+#  extended_image_library: 3.4.0
+
+#https://pub.flutter-io.cn/packages/extended_text
+  extended_text: 9.1.2
+  
+#https://pub.flutter-io.cn/packages/waterfall_flow
+  waterfall_flow: 3.0.2
+
   device_info : any
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -125,5 +137,7 @@ flutter:
           weight: 400
         - asset: fonts/SF-UI-Display-Medium.otf
           weight: 600
-        - asset: fonts/SF-UI-Display-Semibold.otf
-          weight: 700
+
+    - family: SF-UI-Display-Medium
+      fonts:
+        - asset: fonts/SF-UI-Display-Medium.otf
