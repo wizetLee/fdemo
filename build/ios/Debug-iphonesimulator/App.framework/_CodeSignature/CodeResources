@@ -10,7 +10,7 @@
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		grQ5TWRvaPERrcg8qTe+uvtLZW8=
+		tVpAPb8HrI0HoQRwhHGOcOWD+ag=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -18,11 +18,39 @@
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		CTJDk8l/RoSUc0X/icOxT1o03TA=
+		EuKVvjP+Eq3kUmEaK3hQ/52Gtmk=
 		</data>
 		<key>flutter_assets/asset/fonts/DINProBold.otf</key>
 		<data>
 		d6kQWwWcyh2EocSfcZEX6p90N8I=
+		</data>
+		<key>flutter_assets/assets/lottie/fixed_income_data.json</key>
+		<data>
+		8Z0wo+GqMjaaP5IJw5X9z8st7n8=
+		</data>
+		<key>flutter_assets/assets/lottie/fund_data.json</key>
+		<data>
+		M0LvtsY4iMJ6blV6oMWTVYXFYDg=
+		</data>
+		<key>flutter_assets/assets/lottie/home_data.json</key>
+		<data>
+		GZ0Lf1VOj09uUeWjGH9uAXH++u0=
+		</data>
+		<key>flutter_assets/assets/lottie/manager_data.json</key>
+		<data>
+		HVfxfHLghHD/XluxTpHJdGr94bI=
+		</data>
+		<key>flutter_assets/assets/lottie/market_data.json</key>
+		<data>
+		VyBgKeNXhon+0lG2pKpnnWPOxFA=
+		</data>
+		<key>flutter_assets/assets/lottie/optional_data.json</key>
+		<data>
+		MyW36kmkTPIftI4sAhyYaEuNLgQ=
+		</data>
+		<key>flutter_assets/assets/lottie/refresh_data.json</key>
+		<data>
+		3y2HoH540ZPFDIogmScSruyB3Nw=
 		</data>
 		<key>flutter_assets/fonts/DINProBold.otf</key>
 		<data>
@@ -54,7 +82,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		00uzGvPyY8ARuqNHzW3xXu5fcZc=
+		0N97YWwq9zJ8ivOLWUxBUHWA6og=
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -75,7 +103,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			e6F5Gt/RE12YMEWfntTEYLbdBkV6RmmjtzJ846Ya2Ms=
+			ziyRgVmeS8D7zOBgr/d3A7kWEx82a3W/RTg/QC/tbe0=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -89,7 +117,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			DqNe6sBY9hBnMt6XNp7640l84M8iNGPTqEvBxezJaBw=
+			PgSfms8+UuRsd1zbGEwxe/7OXtAo5TK/MhRlsR+xZ24=
 			</data>
 		</dict>
 		<key>flutter_assets/asset/fonts/DINProBold.otf</key>
@@ -97,6 +125,55 @@
 			<key>hash2</key>
 			<data>
 			5n3fjDheU4tcyA38DnrBWxvuLFkoCmJjIcX4uuRnzsA=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/lottie/fixed_income_data.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Xv7A8MeC/lPgq35KQjH6XLIRpHke8kgEv+izf2yX4Js=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/lottie/fund_data.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			0VR4i6OHW4RiDQSZxaH8cime2ns1sO81nqffHfuOxF4=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/lottie/home_data.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			CTnFONwYec1WHj1JGPJn1aZNOKAC+T3/wRyTQ0e3WJM=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/lottie/manager_data.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			paEGXAHSwkuVDQT5Xrp44dfFiWfRu9cm1nC9ozdS1A0=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/lottie/market_data.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			6z4AnhgZ9brKXMkQA03KOdeg0Tu11LC8tpKZpDUVM0M=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/lottie/optional_data.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			QcdjYFlOqD82MYxosXEZxdKNWd6iGHnDpZSDmeQeBdA=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/lottie/refresh_data.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			PR0kWH2wbTUYGNHBQzPTANxc7R5MX0xBE1puyb/L2TQ=
 			</data>
 		</dict>
 		<key>flutter_assets/fonts/DINProBold.otf</key>
@@ -152,7 +229,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			x/42BNaxy0Ys1aMEfMqZ0roJsVtnuJZLAesgyo0xr88=
+			ZY33IhEwcu3V5ZcH7IjAYCSI1Xda0iCNLIOFAn3uc1g=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>

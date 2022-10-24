@@ -7,6 +7,7 @@ import 'package:fdemo/segment/jz_segmented_view.dart';
 import 'package:fdemo/slider/slider_route.dart';
 import 'package:fdemo/system_lib_test/system_lib_test.dart';
 import 'package:flutter/material.dart';
+import 'bottom_navigation_bar/bottom_navigation_bar_route.dart';
 import 'key/positioned_tiles.dart';
 import 'life_cycle/app_life_cycle.dart';
 import 'life_cycle/app_life_cycle2.dart';
@@ -124,6 +125,10 @@ class _MyHomePageState extends State<MyHomePage> {
     map["NestScrollViewRoute"] = (url, params) {
       return NestScrollViewRoute();
     };
+    map["BottomNavigationBarRoute"] = (url, params) {
+      return BottomNavigationBarRoute();
+    };
+
 
     JZRouteManager.instance.registerRoutes(map);
   }
@@ -260,6 +265,13 @@ class _MyHomePageState extends State<MyHomePage> {
       final item = Item(title: "NestScrollViewRoute");
       item.action = () {
         JZRouteManager.instance.showRoute("NestScrollViewRoute", {});
+      };
+      list.add(item);
+    }
+    {
+      final item = Item(title: "BottomNavigationBarRoute");
+      item.action = () {
+        JZRouteManager.instance.showRoute("BottomNavigationBarRoute", {});
       };
       list.add(item);
     }

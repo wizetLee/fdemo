@@ -35,17 +35,25 @@ class _FontRouteState extends State<FontRoute> {
       const TextStyle(fontFamily: 'SF UI Display', fontWeight: FontWeight.w700);
   var w100 = const TextStyle(fontWeight: FontWeight.w100,fontFamilyFallback: ["PingFang SC"]);
   var w200 = const TextStyle(
-      fontWeight: FontWeight.w200, fontFamilyFallback: ["PingFang SC"]);
+      fontWeight: FontWeight.w200
+      // , fontFamilyFallback: ["PingFang SC"]
+  );
   var w300 = const TextStyle(
       fontWeight: FontWeight.w300, fontFamilyFallback: ["PingFang SC"]);
   var w400 = const TextStyle(
       fontWeight: FontWeight.w400, fontFamilyFallback: ["PingFang SC"]);
   var w500 = const TextStyle(
-      fontWeight: FontWeight.w500, fontFamilyFallback: ["PingFang SC"]);
+      fontWeight: FontWeight.w500
+      // , fontFamilyFallback: ["PingFang SC"]
+  );
   var w600 = const TextStyle(
-      fontWeight: FontWeight.w600, fontFamilyFallback: ["PingFang SC"]);
+      fontWeight: FontWeight.w600
+      // , fontFamilyFallback: ["PingFang SC"]
+  );
   var w700 = const TextStyle(
-      fontWeight: FontWeight.w700, fontFamilyFallback: ["PingFang SC"]);
+      fontWeight: FontWeight.w700
+      // , fontFamilyFallback: ["PingFang SC"]
+  );
   var w800 = const TextStyle(
       fontWeight: FontWeight.w800, fontFamilyFallback: ["PingFang SC"]);
   var w900 = const TextStyle(
@@ -79,7 +87,7 @@ class _FontRouteState extends State<FontRoute> {
                 items[index].title,
                 style: items[index]
                     .style
-                    .copyWith(fontSize: 20, decoration: TextDecoration.none)
+                    .copyWith(fontSize: 18, decoration: TextDecoration.none)
                     // .copyWith(fontSize: 20, decoration: TextDecoration.none, fontFamily: "SF-UI-Display-Medium"),
                     // .copyWith(fontSize: 20, decoration: TextDecoration.none, fontFamily: "优设标题黑"),
               ),
