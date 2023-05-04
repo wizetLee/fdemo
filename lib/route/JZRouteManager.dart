@@ -16,16 +16,18 @@ class JZRouteManager {
 
   /// 路由注册
   final Map<String, PageBuilder> _pageBuilders = {};
+
   void registerRoutes(Map<String, PageBuilder> routes) {
     _pageBuilders.addAll(routes);
   }
+
 }
 
 extension JZRouteManagerPublic on JZRouteManager {
   /// 跳转接口
   Future<dynamic> showRoute(String url, Map<String, dynamic> params) {
     NavigatorState? state = JZRouteManager.instance.navigatorKey.currentState;
-
+    // ValueNotifier
     // 状态检查
     if (null == state) return Future.value(null);
 

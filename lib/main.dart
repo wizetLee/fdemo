@@ -6,6 +6,7 @@ import 'package:fdemo/provider/provider_test.dart';
 import 'package:fdemo/segment/jz_segmented_view.dart';
 import 'package:fdemo/slider/slider_route.dart';
 import 'package:fdemo/system_lib_test/system_lib_test.dart';
+import 'package:fdemo/test/test_route.dart';
 import 'package:flutter/material.dart';
 import 'bottom_navigation_bar/bottom_navigation_bar_route.dart';
 import 'key/positioned_tiles.dart';
@@ -25,13 +26,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
+    return RepaintBoundary(
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.red,
+        ),
+        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        navigatorKey: JZRouteManager.instance.navigatorKey,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      navigatorKey: JZRouteManager.instance.navigatorKey,
     );
   }
 }
@@ -128,7 +131,9 @@ class _MyHomePageState extends State<MyHomePage> {
     map["BottomNavigationBarRoute"] = (url, params) {
       return BottomNavigationBarRoute();
     };
-
+    map["TestRoute"] = (url, params) {
+      return TestRoute();
+    };
 
     JZRouteManager.instance.registerRoutes(map);
   }
@@ -170,7 +175,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Item> list() {
     List<Item> list = [];
-
+    {
+      final item = Item(title: "TestRoute");
+      item.action = () {
+        JZRouteManager.instance.showRoute("TestRoute", {});
+      };
+      list.add(item);
+    }
     {
       final item = Item(title: "ProviderTest");
       item.action = () {

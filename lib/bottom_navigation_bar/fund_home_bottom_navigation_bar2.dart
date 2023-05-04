@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class BottomNavigationBarController {}
 
-class FundHomeBottomNavigationBar extends StatefulWidget {
+class FundHomeBottomNavigationBar2 extends StatefulWidget {
   final BottomNavigationBarController controller;
 
   final void Function(int)? onDidSelected;
 
-  const FundHomeBottomNavigationBar(
+  const FundHomeBottomNavigationBar2(
       {Key? key, required this.controller, required this.onDidSelected})
       : super(key: key);
 
   @override
-  State<BottomNavigationBar> createState() => _BottomNavigationBarState();
+  State<FundHomeBottomNavigationBar2> createState() =>
+      _FundHomeBottomNavigationBar2State();
 }
 
-class _BottomNavigationBarState extends State<BottomNavigationBar>
-    with TickerProviderStateMixin {
+class _FundHomeBottomNavigationBar2State
+    extends State<FundHomeBottomNavigationBar2> with TickerProviderStateMixin {
   Duration animationDuration = const Duration(milliseconds: 350);
 
   late AnimationController idleAnimation = AnimationController(vsync: this);
@@ -33,37 +35,47 @@ class _BottomNavigationBarState extends State<BottomNavigationBar>
 
   @override
   Widget build(BuildContext context) {
-    //FIXME: xxxx
+    double fontSize = 12.0;
+    double iconSize = 22.0;
+
+    List<BottomNavigationBarItem> items = [
+      BottomNavigationBarItem(
+        label: "xxx",
+        icon: Lottie.asset("assets/lottie/home_data.json",
+            height: iconSize, controller: indexController(0)),
+      ),
+      BottomNavigationBarItem(
+        label: '书籍',
+        icon: Lottie.asset("assets/lottie/manager_data.json",
+            height: iconSize, controller: indexController(1)),
+      ),
+      BottomNavigationBarItem(
+          label: '我的',
+          icon: Lottie.asset("assets/lottie/optional_data.json",
+              height: iconSize, controller: indexController(2))),
+    ];
 
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      selectedFontSize: 12.0,
-      unselectedFontSize: 12.0,
+      selectedFontSize: fontSize,
+      unselectedFontSize: fontSize,
       currentIndex: selectedIndex,
       onTap: (index) {
         tapIn(index);
       },
-      items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          label: "xxx",
-          icon: Lottie.asset("assets/lottie/home_data.json",
-              height: iconSize, controller: indexController(0)),
-        ),
-
-        BottomNavigationBarItem(
-          label: '书籍',
-          icon: Lottie.asset("assets/lottie/manager_data.json",
-              height: iconSize, controller: indexController(1)),
-        ),
-        BottomNavigationBarItem(
-            label: '我的',
-            icon: Lottie.asset("assets/lottie/optional_data.json",
-                height: iconSize, controller: indexController(2))),
-      ],
-    );;
+      items: items,
+    );
   }
 
-  tapIn(int index) {
+  AnimationController indexController(int index) {
+    return selectedIndex == index
+        ? onSelectedAnimation
+        : previousIndex == index
+            ? onChangedAnimation
+            : idleAnimation;
+  }
+
+  void tapIn(int index) {
     setState(() {
       if (selectedIndex == index && previousIndex >= 0) {
         return;
@@ -87,21 +99,6 @@ class _BottomNavigationBarState extends State<BottomNavigationBar>
       if (onDidSelected != null) {
         onDidSelected(index);
       }
-
-      // if (index == 0) {
-      //   _currBody = Container(
-      //     color: Colors.orange,
-      //   );
-      // } else if (index == 1) {
-      //   _currBody = Container(
-      //     color: Colors.blue,
-      //   );
-      // } else if (index == 2) {
-      //   _currBody = Container(
-      //     color: Colors.pink,
-      //   );
-      // }
     });
-    print("xxxxx $index");
   }
 }
