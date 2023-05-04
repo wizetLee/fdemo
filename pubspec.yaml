@@ -128,6 +128,7 @@ flutter:
     - assets/lottie/
 
   fonts:
+########################################## 阿拉伯数
     - family: DINPro-Bold
       fonts:
         - asset: fonts/DINProBold.otf
@@ -137,12 +138,20 @@ flutter:
     - family: DINPro-Regular
       fonts:
         - asset: fonts/DINProRegular.otf
+########################################## 阿拉伯数
+
+
+##########################################  中文
     - family: SF UI Display
       fonts:
         - asset: fonts/SF-UI-Display-Regular.otf
           weight: 400
         - asset: fonts/SF-UI-Display-Medium.otf
+          weight: 500
+        - asset: fonts/SF-UI-Display-Medium.otf
           weight: 600
+        - asset: fonts/SF-UI-Display-Semibold.otf
+          weight: 700
 
     - family: SF-UI-Display-Medium
       fonts:
