@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:fdemo/test/sliver_widget.dart';
 import 'package:fdemo/test/table_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class _TestRouteState extends State<TestRoute>
     with
         // SingleTickerProviderStateMixin
         TickerProviderStateMixin {
-  // 一堆多的模式
+  // 一对多的模式
   var streamController = StreamController<String>.broadcast(onListen: () {
     print("xxxx");
   });
@@ -78,7 +79,7 @@ class _TestRouteState extends State<TestRoute>
                   if (snapshot.hasData) {
                     print(snapshot.data!);
                   }
-                  return Text("data");
+                  return Text(snapshot.data ?? "snapshot.data");
                 }),
             StreamBuilder(
                 stream: streamController.stream,
@@ -193,7 +194,7 @@ class _TestRouteState extends State<TestRoute>
               child: Transform(
                 alignment: Alignment.center,
                 // transform: Matrix4.identity(),
-                transform: Matrix4.skewY(0.3)..rotateZ(-math.pi / 12.0),
+                transform: Matrix4.skewY(-0.2)..rotateZ(0.2),
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   color: const Color(0xFFE8581C),
@@ -252,7 +253,13 @@ class _TestRouteState extends State<TestRoute>
                 child: Container(child: Text("Table"),)),
 
 
-
+            GestureDetector(
+                onTap: () {
+                 Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                   return SliverWidgetRoute();
+                 }));
+                },
+                child: Container(child: Text("SliverWidgetRoute"),)),
             // 这个组件怎么使用呢？
             Focus(
               onFocusChange: (focused) {

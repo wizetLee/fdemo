@@ -1,6 +1,7 @@
 import 'package:fdemo/animation/animation_route.dart';
 import 'package:fdemo/annotate/annotate_route.dart';
 import 'package:fdemo/font/font_route.dart';
+import 'package:fdemo/gesture_widget/gesture_widget.dart';
 import 'package:fdemo/graph/rich_graph_demo_route.dart';
 import 'package:fdemo/provider/provider_test.dart';
 import 'package:fdemo/segment/jz_segmented_view.dart';
@@ -134,6 +135,9 @@ class _MyHomePageState extends State<MyHomePage> {
     map["TestRoute"] = (url, params) {
       return TestRoute();
     };
+    map["gesture_widget"] = (url, params) {
+      return GestureWidget();
+    };
 
     JZRouteManager.instance.registerRoutes(map);
   }
@@ -175,6 +179,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Item> list() {
     List<Item> list = [];
+    {
+      final item = Item(title: "手势组件");
+      item.action = () {
+        JZRouteManager.instance.showRoute("gesture_widget", {});
+      };
+      list.add(item);
+    }
     {
       final item = Item(title: "TestRoute");
       item.action = () {
