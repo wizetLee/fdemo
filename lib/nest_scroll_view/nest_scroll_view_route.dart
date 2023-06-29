@@ -251,7 +251,7 @@ class SliverPersistentHeaderDelegateExtends
   double get maxExtent => 100;
 
   @override
-  double get minExtent => 50;
+  double get minExtent => 100;
   // double get minExtent => 100;
 
   @override

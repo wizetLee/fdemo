@@ -43,6 +43,22 @@ class _BottomNavigationBarRouteState extends State<BottomNavigationBarRoute>
           if (index == 0) {
             _currBody = Container(
               color: Colors.orange,
+              child: Column(children: [
+                Expanded(child: Container()),
+                ShaderMask(
+                  shaderCallback: (Rect bounds) {
+                    return RadialGradient(
+                      center: Alignment.topLeft,
+                      radius: 1.0,
+                      colors: <Color>[Colors.yellow, Colors.deepOrange.shade900],
+                      tileMode: TileMode.mirror,
+                    ).createShader(bounds);
+                  },
+                  blendMode: BlendMode.srcATop,
+                  child: const Text('I’m burning the memories'),
+                ),
+                Expanded(child: Container()),
+              ],),
             );
           } else if (index == 1) {
             _currBody = Container(
