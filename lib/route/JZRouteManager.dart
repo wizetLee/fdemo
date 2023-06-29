@@ -24,6 +24,7 @@ class JZRouteManager {
 }
 
 extension JZRouteManagerPublic on JZRouteManager {
+
   /// 跳转接口
   Future<dynamic> showRoute(String url, Map<String, dynamic> params) {
     NavigatorState? state = JZRouteManager.instance.navigatorKey.currentState;
@@ -44,4 +45,6 @@ extension JZRouteManagerPublic on JZRouteManager {
       }
     }));
   }
+
+  //FIXME: 监听进入路由，退出路由等等信息
 }
