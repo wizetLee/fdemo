@@ -10,6 +10,28 @@ class AnnotateRoute extends StatefulWidget {
 }
 
 class _AnnotateRouteState extends State<AnnotateRoute> {
+
+
+  @override
+  void initState() {
+    super.initState();
+
+  }
+
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+
+  @override
+  void didUpdateWidget(covariant AnnotateRoute oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,4 +40,6 @@ class _AnnotateRouteState extends State<AnnotateRoute> {
       ),
     );
   }
+
+
 }
