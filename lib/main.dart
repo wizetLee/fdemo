@@ -4,6 +4,7 @@ import 'package:fdemo/font/font_route.dart';
 import 'package:fdemo/gesture_widget/gesture_widget.dart';
 import 'package:fdemo/graph/rich_graph_demo_route.dart';
 import 'package:fdemo/provider/provider_test.dart';
+import 'package:fdemo/scrollbar/scrollbar_route.dart';
 import 'package:fdemo/segment/jz_segmented_view.dart';
 import 'package:fdemo/slider/slider_route.dart';
 import 'package:fdemo/system_lib_test/system_lib_test.dart';
@@ -139,6 +140,9 @@ class _MyHomePageState extends State<MyHomePage> {
       return GestureWidget();
     };
 
+    map["scrollbar"] = (url, params) {
+      return ScrollbarWidget();
+    };
     JZRouteManager.instance.registerRoutes(map);
   }
 
@@ -179,6 +183,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Item> list() {
     List<Item> list = [];
+    {
+      final item = Item(title: "scrollbar");
+      item.action = () {
+        JZRouteManager.instance.showRoute("scrollbar", {});
+      };
+      list.add(item);
+    }
     {
       final item = Item(title: "手势组件");
       item.action = () {
