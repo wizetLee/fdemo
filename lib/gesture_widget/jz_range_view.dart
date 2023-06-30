@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class JZRangeViewController {
@@ -91,8 +90,8 @@ class _JZRangeViewState extends State<JZRangeView> {
   var firstLayout = false;
 
   double widgetWidth = 0.0;
-  double height = 40.0;
-  double driverWidth = 30.0;
+  double height = 24.0;
+  double driverWidth = 32.0;
 
   @override
   void initState() {
@@ -127,8 +126,8 @@ class _JZRangeViewState extends State<JZRangeView> {
 
   EdgeInsets? padding;
   EdgeInsets? margin;
-  Color sliderBackgroundColor = Colors.grey.withOpacity(0.5);
-  Color sliderForegroundColor = Colors.black;
+  Color sliderBackgroundColor = Color(0xFFE5E5E5);
+  Color sliderForegroundColor = Color(0xFFFD263F);
 
   @override
   Widget build(BuildContext context) {
@@ -276,12 +275,10 @@ class _JZRangeViewState extends State<JZRangeView> {
               }
             },
             onHorizontalDragEnd: (DragEndDetails details) {
-              print("onHorizontalDragEnd detail = ${details}");
               details;
               finishDriving();
             },
             onHorizontalDragCancel: () {
-              print("onHorizontalDragCancel");
               finishDriving();
             },
             child: Container(
@@ -293,7 +290,7 @@ class _JZRangeViewState extends State<JZRangeView> {
                   Positioned(
                     left: 0,
                     right: 0,
-                    child: Container(
+                    child: SizedBox(
                       height: widgetHeight,
                       width: widgetWidth,
                       child: Center(
@@ -307,7 +304,7 @@ class _JZRangeViewState extends State<JZRangeView> {
                   Positioned(
                     left: _leftDriverDx + driverSize.width / 2,
                     right: widgetWidth - _rightDriverDx - driverSize.width / 2,
-                    child: Container(
+                    child: SizedBox(
                       height: widgetHeight,
                       width: widgetWidth,
                       child: Center(
@@ -351,19 +348,71 @@ class _JZRangeViewState extends State<JZRangeView> {
     );
   }
 
+  Widget _driverTip() {
+    return Container(
+      width: 2,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(1), color: sliderBackgroundColor),
+    );
+  }
+
   Widget defaultLeftDriver(Size size) {
     return Container(
-      color: Colors.blue,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(4),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xff000000).withOpacity(0.2),
+              offset: Offset(0, 0),
+              blurRadius: 4,
+            ),
+          ]),
       width: size.width,
       height: size.height,
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Spacer(),
+          _driverTip(),
+          SizedBox(width: 2,),
+          _driverTip(),
+          SizedBox(width: 2,),
+          _driverTip(),
+          Spacer(),
+        ],
+      ),
     );
   }
 
   Widget defaultRightDriver(Size size) {
     return Container(
-      color: Colors.red,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(4),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xff000000).withOpacity(0.2),
+              offset: Offset(0, 0),
+              blurRadius: 4,
+            ),
+          ]),
       width: size.width,
       height: size.height,
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Spacer(),
+          _driverTip(),
+          SizedBox(width: 2,),
+          _driverTip(),
+          SizedBox(width: 2,),
+          _driverTip(),
+          Spacer(),
+        ],
+      ),
     );
   }
 }
