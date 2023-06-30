@@ -110,6 +110,20 @@ extension _TemplateRouteStateWidget on _GestureWidgetState {
               leftScale: 0.5,
               rightScale: 1,
               controller: rangeController,
+              leftDriver: (size) {
+                return Container(
+                  color: Colors.orange,
+                  width: size.width,
+                  height: size.height,
+                );
+              },
+              rightDriver: (size) {
+                return Container(
+                  color: Colors.green,
+                  width: size.width,
+                  height: size.height,
+                );
+              },
               // padding: EdgeInsets.only(left: 10, top: 10, right: 10),
               // padding: EdgeInsets.only(left: 10, right: 10),
               // width: 300,
