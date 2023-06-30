@@ -21,9 +21,54 @@ class _GestureWidgetState extends State<GestureWidget> {
       body: _scaffoldBody(context),
     );
   }
+
+  JZRangeViewController rangeController = JZRangeViewController();
+
+  var leftScaleValue = "";
+  var rightScaleValue = "";
+  var leftDisplayValue = "";
+  var rightDisplayValue = "";
+
+  @override
+  void initState() {
+    super.initState();
+    var maxValue = 101.0;
+    var minValue = -101.0;
+    rangeController.scaleDidChange = (leftScale, rightScale){
+      print("滑动变化： leftScale = ${leftScale}, rightScale = ${leftScale}");
+      rightScaleValue = "${rightScale}";
+      leftScaleValue = "${leftScale}";
+
+      var width = (maxValue - minValue);
+      var leftValue = width * leftScale - maxValue;
+      var rightValue = width * rightScale - maxValue;
+      var rightDisplayValue = "${rightValue}";
+      var leftDisplayValue = "${leftValue}";
+      if (leftValue == maxValue || leftValue == minValue) {
+        leftDisplayValue = "无限";
+      }
+      if (rightValue == maxValue || rightValue == minValue) {
+        rightDisplayValue = "无限";
+      }
+
+      this.rightDisplayValue = rightDisplayValue;
+      this.leftDisplayValue = leftDisplayValue;
+      // rightDisplayValue = "${rightScale}";
+      // leftDisplayValue = "${leftScale}";
+      // type 1 （  无限 - n   0  n 无限
+
+
+      setState(() {
+
+      });
+    };
+    //rangeController.setScale
+  }
 }
 
 extension _TemplateRouteStateWidget on _GestureWidgetState {
+
+
   PreferredSizeWidget? _appBar() {
     return null;
   }
@@ -49,7 +94,27 @@ extension _TemplateRouteStateWidget on _GestureWidgetState {
           // onPointerSignal: (PointerSignalEvent event) {
           //   print("onPointerSignal = ${event}");
           //   },
-          child: JZRangeView(),
+          child: Column(children: [
+            SizedBox(height: 200,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(leftDisplayValue), Text(rightDisplayValue),
+              ],),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+              Text(leftScaleValue), Text(rightScaleValue),
+            ],),
+            JZRangeView(
+              leftScale: 0.5,
+              rightScale: 1,
+              controller: rangeController,
+              // padding: EdgeInsets.only(left: 10, top: 10, right: 10),
+              // padding: EdgeInsets.only(left: 10, right: 10),
+              // width: 300,
+            ),
+          ],),
           // child: GestureDetector(
           //   onTapDown: (TapDownDetails details) {
           //     print("onTapDown detail = ${details}");
@@ -293,7 +358,6 @@ extension _TemplateRouteStateWidget on _GestureWidgetState {
           //     ),
           //   ),
           // ),
-
         ),
       ),
     );
@@ -303,5 +367,3 @@ extension _TemplateRouteStateWidget on _GestureWidgetState {
 extension _TemplateRouteStateNetWork on _GestureWidgetState {}
 
 extension _TemplateRouteStatePrivate on _GestureWidgetState {}
-
-
