@@ -19,6 +19,7 @@ class _TestRouteState extends State<TestRoute>
         // SingleTickerProviderStateMixin
         TickerProviderStateMixin {
   // 一对多的模式
+
   var streamController = StreamController<String>.broadcast(onListen: () {
     print("xxxx");
   });
@@ -30,6 +31,12 @@ class _TestRouteState extends State<TestRoute>
     streamController.stream.listen((event) {
       print("xxxxx = event = ${event}");
     });
+  }
+
+  @override
+  void dispose() {
+    streamController.close();
+    super.dispose();
   }
 
   @override
