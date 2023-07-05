@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// 比例换算控制器
 class JZRangeViewController {
   // - 外部写↓↓↓ ------
 
@@ -10,6 +11,55 @@ class JZRangeViewController {
 
   double Function()? getLeftScale;
   double Function()? getRightScale;
+
+  double maxValue;
+  double minValue;
+  JZRangeViewController({required this.minValue, required this.maxValue}) :  assert(minValue <= maxValue);
+
+  /// 通过「比例」设置计算当前「比例的值」
+  /// 一般用在滑动组件时的换算
+  double calDisplayValue({required double calScale}) {
+    return _calDisplayValue(calScale: calScale, maxValue: maxValue, minValue: minValue);
+  }
+
+  /// 通过「比例的值」计算「比例」
+  /// 一般用在初始值的换算
+  double calScaleValue({required double calValue}) {
+    return _calScaleValue(calValue: calValue, maxValue: maxValue, minValue: minValue);
+  }
+
+  double _calDisplayValue({required double calScale, required double maxValue, required double minValue}) {
+    var _calScale = calScale;
+
+    // 比例的内部矫正
+    if (_calScale > 1) {
+      _calScale = 1;
+    } else if (_calScale < 0) {
+      _calScale = 0;
+    }
+
+    var _maxValue = maxValue;
+    var _minValue = minValue;
+
+    var width = (_maxValue - _minValue);
+    var displayValue = width * _calScale - _maxValue;
+    return displayValue;
+  }
+
+  double _calScaleValue({required double calValue, required double maxValue, required double minValue}) {
+    var _calValue = calValue;
+
+    // 最值的内部矫正
+    if (_calValue > maxValue) {
+      _calValue = maxValue;
+    } else if (_calValue < minValue) {
+      _calValue = _calValue;
+    }
+
+    var width = (maxValue - minValue);
+    var calScale = _calValue + maxValue / width;
+    return calScale;
+  }
 }
 
 class JZRangeView extends StatefulWidget {
@@ -42,20 +92,20 @@ class JZRangeView extends StatefulWidget {
 
   const JZRangeView(
       {this.leftScale = 0.0,
-      this.rightScale = 1.0,
-      this.controller,
-      this.scaleDidChange,
-      this.width,
-      this.height,
-      this.leftDriver,
-      this.rightDriver,
-      this.driverWidth,
-      this.padding,
-      this.margin,
-      this.sliderBackgroundColor,
-      this.sliderForegroundColor,
-      this.background,
-      super.key})
+        this.rightScale = 1.0,
+        this.controller,
+        this.scaleDidChange,
+        this.width,
+        this.height,
+        this.leftDriver,
+        this.rightDriver,
+        this.driverWidth,
+        this.padding,
+        this.margin,
+        this.sliderBackgroundColor,
+        this.sliderForegroundColor,
+        this.background,
+        super.key})
       : assert(rightScale <= 1),
         assert(leftScale >= 0),
         assert(leftScale <= rightScale),
@@ -69,7 +119,7 @@ class _JZRangeViewState extends State<JZRangeView> {
   GlobalKey leftDriverKey = GlobalKey(debugLabel: "leftDriverKeyDebugLabel");
   GlobalKey rightDriverKey = GlobalKey(debugLabel: "rightDriverKeyDebugLabel");
   GlobalKey gestureKey =
-      GlobalKey(debugLabel: "_JZRangeViewStateGestureDebugLabel");
+  GlobalKey(debugLabel: "_JZRangeViewStateGestureDebugLabel");
   final double _top = 0;
   double _leftDriverDx = 0;
   double _rightDriverDx = 0;
@@ -101,12 +151,6 @@ class _JZRangeViewState extends State<JZRangeView> {
     driverSize = Size(widget.driverWidth ?? driverWidth, height);
     padding = widget.padding;
     margin = widget.margin;
-    if (widget.sliderBackgroundColor != null) {
-      sliderBackgroundColor = widget.sliderBackgroundColor!;
-    }
-    if (widget.sliderForegroundColor != null) {
-      sliderForegroundColor = widget.sliderForegroundColor!;
-    }
 
     widget.controller?.getLeftScale = () {
       return leftScale;
@@ -126,8 +170,8 @@ class _JZRangeViewState extends State<JZRangeView> {
 
   EdgeInsets? padding;
   EdgeInsets? margin;
-  Color sliderBackgroundColor = Color(0xFFE5E5E5);
-  Color sliderForegroundColor = Color(0xFFFD263F);
+  Color get sliderBackgroundColor => Color(0xff000000);
+  Color get sliderForegroundColor => Color(0xFFFD263F);
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +189,7 @@ class _JZRangeViewState extends State<JZRangeView> {
           driverSize = Size(driverSize.width, widgetHeight);
 
           // 位置计算
-          {
+              {
             var handledWidth = driverSize.width;
             var cWidth = widgetWidth - handledWidth * 2;
             _leftDriverDx = leftScale * cWidth;
@@ -179,7 +223,7 @@ class _JZRangeViewState extends State<JZRangeView> {
                   if (renderBox != null) {
                     Offset widgetPosition = renderBox.localToGlobal(Offset.zero,
                         ancestor:
-                            gestureKey.currentContext?.findRenderObject());
+                        gestureKey.currentContext?.findRenderObject());
                     Size widgetSize = renderBox.size;
                     var widgetRect = Rect.fromLTWH(widgetPosition.dx, 0,
                         widgetSize.width, widgetSize.height);
@@ -275,7 +319,6 @@ class _JZRangeViewState extends State<JZRangeView> {
               }
             },
             onHorizontalDragEnd: (DragEndDetails details) {
-              details;
               finishDriving();
             },
             onHorizontalDragCancel: () {
@@ -296,7 +339,7 @@ class _JZRangeViewState extends State<JZRangeView> {
                       child: Center(
                         child: Container(
                           height: sliderHeight,
-                          color: sliderBackgroundColor,
+                          color: widget.sliderBackgroundColor ?? sliderBackgroundColor,
                         ),
                       ),
                     ),
@@ -310,7 +353,7 @@ class _JZRangeViewState extends State<JZRangeView> {
                       child: Center(
                         child: Container(
                           height: sliderHeight,
-                          color: sliderForegroundColor,
+                          color: widget.sliderForegroundColor ?? sliderForegroundColor,
                         ),
                       ),
                     ),
@@ -352,14 +395,14 @@ class _JZRangeViewState extends State<JZRangeView> {
     return Container(
       width: 2,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(1), color: sliderBackgroundColor),
+          borderRadius: BorderRadius.circular(1), color: Color(0xff000000)),
     );
   }
 
   Widget defaultLeftDriver(Size size) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: Color(0xff000000),
           borderRadius: BorderRadius.circular(4),
           boxShadow: [
             BoxShadow(
@@ -389,7 +432,7 @@ class _JZRangeViewState extends State<JZRangeView> {
   Widget defaultRightDriver(Size size) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: Color(0xff000000),
           borderRadius: BorderRadius.circular(4),
           boxShadow: [
             BoxShadow(

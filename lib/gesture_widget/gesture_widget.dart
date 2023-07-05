@@ -21,7 +21,7 @@ class _GestureWidgetState extends State<GestureWidget> {
     );
   }
 
-  JZRangeViewController rangeController = JZRangeViewController();
+  JZRangeViewController rangeController = JZRangeViewController(minValue: 0, maxValue: 100);
 
   var leftScaleValue = "";
   var rightScaleValue = "";
