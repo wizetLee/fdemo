@@ -41,10 +41,11 @@ class JZLineBGPainter extends CustomPainter {
   }
 
 
+  /// 虚线
   Path getDashedPath({
-    required Point<double> from,
-    required Point<double> to,
-    required gap,
+    required Point<double> from, // 起始点
+    required Point<double> to, // 终点
+    required gap, // 间隙
   }) {
     Size size = Size(to.x - from.x, to.y - from.y);
     Path path = Path();

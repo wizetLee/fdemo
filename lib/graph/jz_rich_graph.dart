@@ -67,7 +67,6 @@ class _JZRichGraphState extends State<JZRichGraph> {
 
   /// 底部内容
   Widget _buildBody() {
-    print("_buildBody");
     final param = widget.param;
 
     final EdgeInsets renderInset = EdgeInsets.fromLTRB(
@@ -118,14 +117,11 @@ class _JZRichGraphState extends State<JZRichGraph> {
 extension _JZRichGraphStateSubWidget on _JZRichGraphState {
   /// 绘图部分
   Widget _buildRenderWidget() {
-    print("_buildRenderWidget");
     final renderSize = this.widget.param.getRenderSize();
     final visibleCount = this.widget.param.getVisibleCount();
 
-    //this.widget.param.renderViewPadding
-
     final result =
-        this.widget.renderer.getRenderResult(param: this.rendererParam);
+        widget.renderer.getRenderResult(param: rendererParam);
 
     return GestureDetector(
       child: Container(
@@ -135,38 +131,44 @@ extension _JZRichGraphStateSubWidget on _JZRichGraphState {
         child: Stack(
           children: [
             // 背景
-            this.widget.renderer.getChartBG(param: this.rendererParam),
+            widget.renderer.getChartBG(param: rendererParam),
             // 内容
             if (result != null) result,
             // 其他
           ],
         ),
       ),
-      onTap: () {},
-      onDoubleTap: () {},
-      onLongPress: () {},
-      onLongPressEnd: (detail) {
-        _gestureAction(detail.localPosition, renderSize);
+      onTapDown: (TapDownDetails details) {
+        if (_showPosition()) {
+          _clean();
+        } else {
+          _gestureAction(details.localPosition, renderSize);
+        }
       },
-      onLongPressCancel: () {
-        _clean();
+      onLongPressEnd: (LongPressEndDetails details) {
+        _gestureAction(details.localPosition, renderSize);
       },
-      onLongPressStart: (detail) {
-        _gestureAction(detail.localPosition, renderSize);
+      onLongPressStart: (LongPressStartDetails details) {
+        _gestureAction(details.localPosition, renderSize);
       },
-      onLongPressMoveUpdate: (detail) {
-        _gestureAction(detail.localPosition, renderSize);
+      onLongPressMoveUpdate: (LongPressMoveUpdateDetails details) {
+        _gestureAction(details.localPosition, renderSize);
       },
       onLongPressUp: () {
-        _clean();
+        // _clean();
       },
     );
   }
 
-  _clean() {
-    this.localPosition = null;
-    this.locationIn = null;
-    this.setState(() {});
+  bool _showPosition() {
+    return (localPosition != null);
+  }
+
+
+  void _clean() {
+    localPosition = null;
+    locationIn = null;
+    setState(() {});
   }
 
   /// 收视统一调度
@@ -189,14 +191,12 @@ extension _JZRichGraphStateSubWidget on _JZRichGraphState {
   int? _index(Offset point) {
     var index = -1;
     final maxCount = this.widget.param.getVisibleCount();
-
     final size = this.widget.param.getRealRenderSize();
 
     final widthPerItem = size.width / (maxCount - 1);
     final beginLeft = this.widget.param.renderPadding.left;
     if ((point.dx >= beginLeft) && (maxCount > 0)) {
       final dx = point.dx - beginLeft;
-      // + (widthPerItem / 2)， 相当于取整场景下+0.5的处理
       index = ((dx + (widthPerItem / 2)) / widthPerItem).floor();
       if (index >= maxCount) {
         index = maxCount - 1;

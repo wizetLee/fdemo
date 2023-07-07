@@ -47,7 +47,7 @@ class JZRichGraphLineRenderer extends JZRichGraphRenderer {
     List<JZRGLinesPainterModel> painterModels = this.getPainterModels();
     this.painterModels = painterModels;
     //FIXME:看情况自定义头部的widget
-    return Container(
+    return SizedBox(
         height: param.param.headerHeight,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -185,7 +185,7 @@ extension _JZRichGraphLineRenderer on JZRichGraphLineRenderer {
       color: Colors.pink,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           RichText(text: first, textAlign: TextAlign.left),
           RichText(text: second, textAlign: TextAlign.center),

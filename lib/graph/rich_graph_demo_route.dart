@@ -19,14 +19,13 @@ class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
   Widget build(BuildContext context) {
     var padding = EdgeInsets.zero;
     int count = 10;
-    padding = EdgeInsets.fromLTRB(15, 15, 15, 15);
+    padding = const EdgeInsets.fromLTRB(15, 15, 15, 15);
     var param = JZRichGraphParam(
-      leftDividingRuleOffset: 0,
-      rightDividingRuleOffset: 0,
-      // leftDividingRuleWidth: 0,
-      // rightDividingRuleWidth: 0,
-      width: MediaQuery.of(context).size.width,
+      // leftDividingRuleOffset: 10,
+      // rightDividingRuleOffset: 10,
+      // width: 200,
       height: 400,
+      width: MediaQuery.of(context).size.width,
       padding: padding,
       visibleCount: count,
       dividingRuleCount:  7,

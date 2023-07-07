@@ -10,6 +10,9 @@ class JZRichGraphRendererParam {
   JZRichGraphRendererParam({required this.param});
 }
 
+// 2023年 7月 7日 星期五 08时45分59秒 CST
+// TextPainter替换renderer中坐标，
+
 /// 渲染器
 abstract class JZRichGraphRenderer {
   /// 背景

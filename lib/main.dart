@@ -184,6 +184,18 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Item> list() {
     List<Item> list = [];
     {
+      final item = Item(title: "传统的跳转Navigator.push：Graph");
+      item.action = () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const RichGraphDemoRoute(),
+          ),
+        );
+      };
+      list.add(item);
+    }
+    {
       final item = Item(title: "scrollbar");
       item.action = () {
         JZRouteManager.instance.showRoute("scrollbar", {});
@@ -215,18 +227,6 @@ class _MyHomePageState extends State<MyHomePage> {
       final item = Item(title: "系统API测试");
       item.action = () {
         JZRouteManager.instance.showRoute("SystemLibTest", {});
-      };
-      list.add(item);
-    }
-    {
-      final item = Item(title: "传统的跳转Navigator.push：Graph");
-      item.action = () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const RichGraphDemoRoute(),
-          ),
-        );
       };
       list.add(item);
     }
