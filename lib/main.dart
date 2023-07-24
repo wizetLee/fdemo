@@ -28,6 +28,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+    //Test
+    print({"a_key": 1}["a_key"].castOrFallBack(1));
+    print({"a_key": "s"}["a_key"].castOrFallBack(1));
+    print({"a_key": "s"}["a_keyccc"].castOrFallBack("1"));
+    print(null.castOrFallBack(1));
+
     return RepaintBoundary(
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -352,5 +359,14 @@ class ListItem extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+extension DC on dynamic {
+  T castOrFallBack<T>(T fallback) {
+    if (this != null) {
+      return this is T ? this as T : fallback;
+    }
+    return fallback;
   }
 }

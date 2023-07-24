@@ -47,7 +47,8 @@ extension JZGraphToolLines on JZGraphTool {
         required Paint linePaint,
         required Offset paintAt, // 开始的绘制点
         required double width, // 线长度
-        double gap = 2, // 间隔
+        double gap = 4, // 间隔
+        double dashedWidth = 4, // 宽
         Axis axis = Axis.horizontal, // 方向
       }) {
 
@@ -64,6 +65,7 @@ extension JZGraphToolLines on JZGraphTool {
       } else {
         canvas.drawLine(Offset(paintAt.dx, p1Value), Offset(paintAt.dx, p2Value), linePaint);
       }
+      start = p2Value;
     }
   }
 
