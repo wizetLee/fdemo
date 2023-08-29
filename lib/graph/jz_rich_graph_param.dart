@@ -21,7 +21,7 @@ class JZRichGraphParam {
 
   /// 刻度与renderView之间的关系处理
   double leftDividingRuleOffset; // 左边（0.0
-  double rightDividingRuleOffset;// 右边（0.0
+  double rightDividingRuleOffset; // 右边（0.0
   TextAlign leftDividingRuleAlignment = TextAlign.left;
   TextAlign rightDividingRuleAlignment = TextAlign.right;
 
