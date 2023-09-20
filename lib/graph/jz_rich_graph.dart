@@ -23,23 +23,22 @@ class JZRichGraph extends StatefulWidget {
 class _JZRichGraphState extends State<JZRichGraph> {
   Offset? localPosition;
   int? locationIn;
+  ValueNotifier<int?> locationInVN = ValueNotifier(null);
 
-  JZRichGraphRendererParam get rendererParam {
-    final rendererParam = JZRichGraphRendererParam(param: this.widget.param);
+  late JZRichGraphRendererParam rendererParam =
+      JZRichGraphRendererParam(param: this.widget.param)
+        ..point = this.localPosition
+        ..locationIn = this.locationIn;
 
-    rendererParam.point = this.localPosition;
-    {
-      // Offset localPosition = this.localPosition ?? Offset(double.maxFinite, 0);
-      // rendererParam.locationIn =
-      //     this.locationIn ?? (_index(localPosition) ?? 0);
-      rendererParam.locationIn = this.locationIn;
-    }
-    return rendererParam;
+  @override
+  void dispose() {
+    locationInVN.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    print("build");
+    widget.renderer.build(context);
     return SizedBox(
       width: this.widget.param.width,
       height: this.widget.param.height,
@@ -61,26 +60,27 @@ class _JZRichGraphState extends State<JZRichGraph> {
 
   /// 头部内容
   Widget _bulidHeader() {
-    return this.widget.renderer.getHeaderResult(param: this.rendererParam) ??
-        Container();
+    // return widget.renderer.getHeaderResult(param: this.rendererParam) ??
+    //     Container();
+    return ValueListenableBuilder(
+        valueListenable: locationInVN,
+        builder: (context, value, child) {
+          return widget.renderer.getHeaderResult(param: rendererParam) ??
+              Container(
+                height: rendererParam.param.headerHeight,
+              );
+        });
   }
 
   /// 底部内容
   Widget _buildBody() {
     final param = widget.param;
-
     final EdgeInsets renderInset = EdgeInsets.fromLTRB(
         param.leftDividingRuleOffset,
         param.renderHeaderSpacing,
         param.rightDividingRuleOffset,
         0);
     final children = _buildRenderWidget();
-    var leftRule =
-        this.widget.renderer.getLeftRule(param: this.rendererParam) ??
-            Container();
-    var rightRule =
-        this.widget.renderer.getRightRule(param: this.rendererParam) ??
-            Container();
     return Expanded(
         child: Row(
       children: [
@@ -90,23 +90,20 @@ class _JZRichGraphState extends State<JZRichGraph> {
                 margin: EdgeInsets.zero,
                 child: Stack(
                   children: [
-                    Padding(
-                      padding: renderInset,
-                      child: Column(
-                        children: [children],
-                      ),
-                    ),
-                    Positioned(child: leftRule, left: 0),
-                    Positioned(child: rightRule, right: 0),
                     Positioned(
                       child: this
                               .widget
                               .renderer
                               .getBottomResult(param: this.rendererParam) ??
                           Container(),
-                      left: param.leftDividingRuleOffset,
                       bottom: 0,
-                    )
+                    ),
+                    Padding(
+                      padding: renderInset,
+                      child: Column(
+                        children: [children],
+                      ),
+                    ),
                   ],
                 )))
       ],
@@ -117,58 +114,61 @@ class _JZRichGraphState extends State<JZRichGraph> {
 extension _JZRichGraphStateSubWidget on _JZRichGraphState {
   /// 绘图部分
   Widget _buildRenderWidget() {
-    final renderSize = this.widget.param.getRenderSize();
-    final visibleCount = this.widget.param.getVisibleCount();
-
-    final result =
-        widget.renderer.getRenderResult(param: rendererParam);
-
-    return GestureDetector(
-      child: Container(
+    final renderSize = widget.param.getRenderSize();
+    return Container(
+        padding: EdgeInsets.symmetric(vertical: 5),
         decoration: BoxDecoration(color: Colors.orange.withOpacity(0.3)),
         width: renderSize.width,
         height: renderSize.height,
         child: Stack(
           children: [
-            // 背景
             widget.renderer.getChartBG(param: rendererParam),
-            // 内容
-            if (result != null) result,
-            // 其他
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              child: GestureDetector(
+                child: ValueListenableBuilder(
+                    valueListenable: locationInVN,
+                    builder: (context, value, child) {
+                      final result =
+                          widget.renderer.getRenderResult(param: rendererParam);
+                      if (result != null) return result;
+                      return Container();
+                    }),
+                onTapDown: (TapDownDetails details) {
+                  if (_showPosition()) {
+                    _clean();
+                  } else {
+                    _gestureAction(details.localPosition, renderSize);
+                  }
+                },
+                onLongPressEnd: (LongPressEndDetails details) {
+                  _gestureAction(details.localPosition, renderSize);
+                },
+                onLongPressStart: (LongPressStartDetails details) {
+                  _gestureAction(details.localPosition, renderSize);
+                },
+                onLongPressMoveUpdate: (LongPressMoveUpdateDetails details) {
+                  _gestureAction(details.localPosition, renderSize);
+                },
+                onLongPressUp: () {
+                  // _clean();
+                },
+              ),
+            ),
           ],
-        ),
-      ),
-      onTapDown: (TapDownDetails details) {
-        if (_showPosition()) {
-          _clean();
-        } else {
-          _gestureAction(details.localPosition, renderSize);
-        }
-      },
-      onLongPressEnd: (LongPressEndDetails details) {
-        _gestureAction(details.localPosition, renderSize);
-      },
-      onLongPressStart: (LongPressStartDetails details) {
-        _gestureAction(details.localPosition, renderSize);
-      },
-      onLongPressMoveUpdate: (LongPressMoveUpdateDetails details) {
-        _gestureAction(details.localPosition, renderSize);
-      },
-      onLongPressUp: () {
-        // _clean();
-      },
-    );
+        ));
   }
 
   bool _showPosition() {
     return (localPosition != null);
   }
 
-
   void _clean() {
     localPosition = null;
     locationIn = null;
-    setState(() {});
+    rendererParam.point = localPosition;
+    rendererParam.locationIn = locationIn;
+    locationInVN.value = null;
   }
 
   /// 收视统一调度
@@ -176,15 +176,11 @@ extension _JZRichGraphStateSubWidget on _JZRichGraphState {
     this.localPosition = localPosition;
     final locationIn = _index(localPosition);
     this.locationIn = locationIn;
-    if (locationIn != null) {
-      if (kDebugMode) {
-        print("手势locationIn = ${locationIn}");
-      }
-
-      //FIXME: 考虑局部刷新
-      // this.widget.renderer.getGestureRenderResult(
-      //     locationIn, localPosition, renderSize, this.widget.param);
-      this.setState(() {});
+    rendererParam.point = localPosition;
+    rendererParam.locationIn = locationIn;
+    locationInVN.value = locationIn;
+    if (kDebugMode && locationIn != null) {
+      print("手势locationIn = ${locationIn}");
     }
   }
 
@@ -206,5 +202,4 @@ extension _JZRichGraphStateSubWidget on _JZRichGraphState {
     }
     return index;
   }
-
 }

@@ -8,6 +8,10 @@
 		<data>
 		85iaADE5tc/NukRC+KGdiZaZ0ZA=
 		</data>
+		<key>flutter_assets/AssetManifest.bin</key>
+		<data>
+		9ufWWcA/xcv7hfK+nKJoemuXQDQ=
+		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
 		QHDUmO4KTq1lGR7zB9wUVTRgTDE=
@@ -18,7 +22,7 @@
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		0G7Zs+TcccQ4N3Qmg5vRbB1ty4I=
+		aXg9MaH9RgUU86pL2zET6ge63II=
 		</data>
 		<key>flutter_assets/asset/fonts/DINProBold.otf</key>
 		<data>
@@ -82,11 +86,11 @@
 		</data>
 		<key>flutter_assets/isolate_snapshot_data</key>
 		<data>
-		xbo3iIc8fTnuE5W4XE0VFw6QIBI=
+		gLUZUNbndCKs00+ddk9hgePiKHQ=
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		KlSwpCwpFXOCvYbiie8yCb/Gea0=
+		U6hdVDOL+LTesJncDlcjRWOkpfg=
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -94,15 +98,22 @@
 		</data>
 		<key>flutter_assets/shaders/ink_sparkle.frag</key>
 		<data>
-		Z/DhfUUahgFGsthszkW1YubfdU8=
+		KL+7f3IYR/Y9WDlxxUeDmgGoluc=
 		</data>
 		<key>flutter_assets/vm_snapshot_data</key>
 		<data>
-		bjcE383nCc8U85vWBdZ80X32NVA=
+		+HsWKuOINTMijVvKruokFpzcml8=
 		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>flutter_assets/AssetManifest.bin</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			+88yzX+ltjvK/UYY6nq4UALu4XjdjVubjjM2qSs8Wzo=
+			</data>
+		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
@@ -121,7 +132,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			1VJr6m3to90xNS3Gc39aoJR7OBfBhJJ17+/qrHuTGcI=
+			8hNYcW5pzxyTKHT72QOynvJpnUPRmoANy68ABlelR9s=
 			</data>
 		</dict>
 		<key>flutter_assets/asset/fonts/DINProBold.otf</key>
@@ -233,14 +244,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			76aJUrz/yLBliHLDcOlVu+tPuICHsFWS91Ovpysst2I=
+			rnNRNqkjfwz6o+ECah8gei8ooCiw3YLryTTvYxQ0uLg=
 			</data>
 		</dict>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			gS7bzB2FW68kvtp6wAph1LIv2+zTbBRExXyqL33CVIw=
+			gz8AoxmKOWm5yOqhXee6SNr4nzyhoy0Xl7mb9xHRPB4=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -254,14 +265,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			hgGex10sKxTSC95tzLdljzYd3qnntuSb96YXXaU9Nlc=
+			v6u8YtYjslOLIIb1rrgcOW817fxVEiBaprKuV+f6FpY=
 			</data>
 		</dict>
 		<key>flutter_assets/vm_snapshot_data</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			L69dzlyAJyxdLVGPUFBuUaiyjDwAOUWCUp3TXXm9RjY=
+			XRpcsR0vWGkDzG+35GjjzaJtqN3CuV3azmWWPti/o3M=
 			</data>
 		</dict>
 	</dict>

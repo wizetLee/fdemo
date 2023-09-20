@@ -8,45 +8,40 @@ export 'package:fdemo/graph/jz_rich_graph_renderer.dart';
 
 /// 目前仅支持一条线
 class JZRichGraphLineRenderer extends JZRichGraphRenderer {
-  /// 线的数据
-  List<JZRichGraphLineRendererNormalValue> models;
+  List<JZRGLinesPainterModel> painterModels;
 
-  List<JZRGLinesPainterModel> painterModels = [];
+  JZRichGraphLineRenderer({required this.painterModels});
 
-  JZRichGraphLineRenderer({required this.models});
+  @override
+  void build(BuildContext context) {
+  }
 
   @override
   Widget getChartBG({required JZRichGraphRendererParam param}) {
+    final getLeftRichText = this.getLeftRichText(param: param);
+    final getRightRichText = this.getRightRichText(param: param);
     return CustomPaint(
       size: param.param.getRenderSize(),
-      painter: JZLineBGPainter(count: 5, padding: EdgeInsets.zero),
+      painter: JZLineBGPainter(
+          count: param.param.dividingRuleCount,
+          padding: EdgeInsets.zero,
+          left: getLeftRichText,
+          right: getRightRichText,
+          ruleGaps: param.param.ruleGaps),
     );
   }
 
   @override
   Widget? getRenderResult({required JZRichGraphRendererParam param}) {
-    final models = this.models;
-    final values = models.map((e) => e.value).toList();
-
-    final targetCount = param.param.visibleCount;
-
     List<JZRGLinesPainterModel> painterModels = this.painterModels;
-    final lpParam = JZRGNormalPainterParam()
-      ..visibleCount = targetCount
-      ..padding = param.param.renderPadding
-      ..locationIn = param.locationIn;
-
     return CustomPaint(
       size: param.param.getRenderSize(),
-      painter: JZRGNormalPainter(lineModels: painterModels, param: lpParam),
+      painter: JZRGNormalPainter(lineModels: painterModels, param: param, ),
     );
   }
 
   @override
   Widget? getHeaderResult({required JZRichGraphRendererParam param}) {
-    List<JZRGLinesPainterModel> painterModels = this.getPainterModels();
-    this.painterModels = painterModels;
-    //FIXME:看情况自定义头部的widget
     return SizedBox(
         height: param.param.headerHeight,
         child: Row(
@@ -62,74 +57,20 @@ class JZRichGraphLineRenderer extends JZRichGraphRenderer {
   Widget? getBottomResult({required JZRichGraphRendererParam param}) {
     return _buildBottom(param);
   }
-
-  @override
-  Widget? getLeftRule({required JZRichGraphRendererParam param}) {
-    final getLeftRichText = this.getLeftRichText(param: param);
-    List<Widget> leftLabels = [];
-    final dividingRuleCount = param.param.dividingRuleCount;
-    for (int i = 0; i < dividingRuleCount; i++) {
-      {
-        final alignment = param.param.leftDividingRuleAlignment;
-        if (getLeftRichText.length > i) {
-          leftLabels.add(Container(
-            child: RichText(
-              text: getLeftRichText[i],
-              textAlign: alignment,
-            ),
-          ));
-        } else {
-          leftLabels.add(
-              RichText(text: const TextSpan(text: "--"), textAlign: alignment));
-        }
-      }
-    }
-    final height = param.param.getRenderSize().height;
-    var dividingRuleLeft = Container(
-      height: height,
-      color: Colors.transparent,
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: leftLabels),
-    );
-
-    return IgnorePointer(child: dividingRuleLeft, ignoring: true);
-  }
-
-  @override
-  Widget? getRightRule({required JZRichGraphRendererParam param}) {
-    final getRightRichText = this.getRightRichText(param: param);
-    List<Widget> rightLabels = [];
-
-    final dividingRuleCount = param.param.dividingRuleCount;
-    for (int i = 0; i < dividingRuleCount; i++) {
-      {
-        final alignment = param.param.rightDividingRuleAlignment;
-        if (getRightRichText.length > i) {
-          rightLabels
-              .add(RichText(text: getRightRichText[i], textAlign: alignment));
-        } else {
-          rightLabels
-              .add(RichText(text: TextSpan(text: "--"), textAlign: alignment));
-        }
-      }
-    }
-    final height = param.param.getRenderSize().height;
-    var dividingRuleRight = Container(
-      height: height,
-      color: Colors.transparent,
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: rightLabels),
-    );
-    return IgnorePointer(child: dividingRuleRight, ignoring: true);
-  }
 }
 
 extension _JZRichGraphLineRenderer on JZRichGraphLineRenderer {
   /// 获取底部展示的内容（日期）
   List<TextSpan> getBottomRichText({required JZRichGraphRendererParam param}) {
-    final models = this.models;
+    var painterModels = this.painterModels;
+    List<JZRGNormalPainterElement> lines = [];
+    painterModels.forEach((element) {
+      if (element.lines.length > lines.length) {
+        lines = element.lines;
+      }
+    });
+
+    final models = lines.map((e) => e.origin as JZRichGraphLineRendererNormalValue).toList();
     if (models.isEmpty) {
       return [];
     }
@@ -164,8 +105,6 @@ extension _JZRichGraphLineRenderer on JZRichGraphLineRenderer {
 
   /// 设置bottom显示的内容
   Widget _buildBottom(JZRichGraphRendererParam param) {
-    print("_buildBottom");
-
     final getBottomRichText = this.getBottomRichText(param: param);
     final first = (getBottomRichText.isNotEmpty)
         ? getBottomRichText[0]
@@ -208,17 +147,21 @@ extension _JZRichGraphLineRenderer on JZRichGraphLineRenderer {
         final model = painterModel.lines[index];
         value = model.renderValue.toStringAsFixed(2);
       } else {
-        final model = painterModel.lines.last;
-        value = model.renderValue.toStringAsFixed(2);
+        if (painterModel.lines.isEmpty) {
+          value = "--";
+        } else {
+          final model = painterModel.lines.last;
+          value = model.renderValue.toStringAsFixed(2);
+        }
       }
     }
 
     return TextSpan(
         text: value,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 14,
         ),
-        children: [
+        children: const [
           TextSpan(
             text: "",
             style: TextStyle(
@@ -232,6 +175,7 @@ extension _JZRichGraphLineRenderer on JZRichGraphLineRenderer {
     var date = "--";
     final locationIn = param.locationIn;
     if (painterModels.isNotEmpty) {
+      //FIXME: 因为只有一条线
       final painterModel = painterModels[0];
       if (locationIn != null && painterModel.lines.length > locationIn) {
         final model = painterModel.lines[locationIn];
@@ -241,21 +185,24 @@ extension _JZRichGraphLineRenderer on JZRichGraphLineRenderer {
         final model = painterModel.lines[index];
         date = (model.origin as JZRichGraphLineRendererNormalValue).date;
       } else {
-        final model = painterModel.lines.last;
-        date = (model.origin as JZRichGraphLineRendererNormalValue).date;
+        if (painterModel.lines.isEmpty) {
+          date = "--";
+        } else {
+          final model = painterModel.lines.last;
+          date = (model.origin as JZRichGraphLineRendererNormalValue).date;
+        }
       }
     }
     return TextSpan(
         text: date,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 14,
         ),
-        children: []);
+        children: const []);
   }
 
   List<TextSpan> getLeftRichText({required JZRichGraphRendererParam param}) {
-    final range = JZRGLinesPainterModel.range(models: this.painterModels);
-
+    var range = param.param.range(models: painterModels);
     var count = param.param.dividingRuleCount;
 
     // 获取所有数据的最值
@@ -271,14 +218,14 @@ extension _JZRichGraphLineRenderer on JZRichGraphLineRenderer {
     List<TextSpan> result = [];
     for (var i = 0; i < count; i++) {
       var title = (max - (valuePerItem * i)).toStringAsFixed(2);
-      result.add(TextSpan(text: "${title}"));
+      result.add(TextSpan(text: title));
     }
     return result;
   }
 
   /// 左右坐标的富文本
   List<TextSpan> getRightRichText({required JZRichGraphRendererParam param}) {
-    final range = JZRGLinesPainterModel.range(models: this.painterModels);
+    var range = param.param.range(models: painterModels);
     var count = param.param.dividingRuleCount;
 
     // 获取所有数据的最值
@@ -294,29 +241,8 @@ extension _JZRichGraphLineRenderer on JZRichGraphLineRenderer {
     List<TextSpan> result = [];
     for (var i = 0; i < count; i++) {
       var title = (max - (valuePerItem * i)).toStringAsFixed(2);
-      result.add(TextSpan(text: "${title}"));
+      result.add(TextSpan(text: title));
     }
     return result;
-  }
-
-  List<JZRGLinesPainterModel> getPainterModels() {
-    final models = this.models;
-    // final values = models.map((e) => e.value).toList();
-    List<JZRGLinesPainterModel> painterModels = [];
-    {
-      List<JZRGNormalPainterElement> elements = [];
-      for (int i = 0; i < models.length; i++) {
-        final element = JZRGNormalPainterElement(
-            renderValue: models[i].value, origin: models[i]);
-        elements.add(element);
-      }
-      final model = JZRGLinesPainterModel()
-        ..color = Colors.yellow
-        ..strokeWidth = 1
-        ..lines = elements;
-
-      painterModels.add(model);
-    }
-    return painterModels;
   }
 }

@@ -263,7 +263,7 @@ class SliverPersistentHeaderDelegateExtends
   }
 }
 
-class TempPreferredSizeWidget extends StatelessWidget with PreferredSizeWidget {
+class TempPreferredSizeWidget extends StatelessWidget implements PreferredSizeWidget {
   const TempPreferredSizeWidget({Key? key}) : super(key: key);
 
   @override

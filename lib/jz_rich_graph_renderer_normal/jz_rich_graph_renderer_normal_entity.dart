@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import '../graph/jz_rich_graph_renderer.dart';
 
 /// 绘制模型的单个数据
 class JZRGNormalPainterElement {
@@ -9,6 +9,7 @@ class JZRGNormalPainterElement {
 
   /// 用于绘制的数值
   double renderValue;
+
 
   JZRGNormalPainterElement({required this.renderValue, required this.origin});
 }
@@ -22,63 +23,15 @@ class JZRGLinesPainterModel {
 
   double strokeWidth = 1;
 
-  /// 获取最值
-  /// dx = min
-  /// dy = max
-  static Offset? range({required List<JZRGLinesPainterModel> models}) {
-    double? max;
-    double? min;
-    // 获取所有数据的最值
-        {
-      for (var element in models) {
-        final renderValues = element.lines.map((e) => e.renderValue).toList();
-        if (renderValues.isNotEmpty) {
-          final tmpMax = renderValues
-              .reduce((value, element) => (value > element) ? value : element);
-          final tmpMin = renderValues
-              .reduce((value, element) => (value < element) ? value : element);
-          if (max != null && min != null) {
-            if (max > tmpMax) {
-              max = tmpMax;
-            }
-            if (min < tmpMax) {
-              min = tmpMax;
-            }
-          } else {
-            max = tmpMax;
-            min = tmpMin;
-          }
-        }
-      }
-    }
-    if (max == min) {
-      return null;
-    }
-
-    if (max == null || min == null) {
-      return null;
-    }
-
-    return Offset(min, max);
-  }
-}
-
-/// 画板参数
-class JZRGNormalPainterParam {
-  int? visibleCount;
-  int? locationIn;
-  EdgeInsets padding = EdgeInsets.zero;
-  JZRGNormalPainterParam();
 }
 
 /// 多段绘制模型的落地
 class JZRGNormalPainter extends CustomPainter {
-
   /// 线的模型（可多条）
   final List<JZRGLinesPainterModel> lineModels;
 
   /// 绘制相关的参数
-  JZRGNormalPainterParam param;
+  JZRichGraphRendererParam param;
 
   JZRGNormalPainter({
     required this.lineModels,
@@ -93,13 +46,17 @@ class JZRGNormalPainter extends CustomPainter {
       ..strokeWidth = 1
       ..color = color;
 
-    var y = param.padding.top;
-    var x = param.padding.left;
+    var y = param.param.renderPadding.top;
+    var x = param.param.renderPadding.left;
     final renderSize = Size(
-        size.width - param.padding.left - param.padding.right,
-        size.height - param.padding.top - param.padding.bottom);
+        size.width -
+            param.param.renderPadding.left -
+            param.param.renderPadding.right,
+        size.height -
+            param.param.renderPadding.top -
+            param.param.renderPadding.bottom);
 
-    double startX = x;
+
 
     final models = this.lineModels;
     var maxLength = 0;
@@ -111,13 +68,15 @@ class JZRGNormalPainter extends CustomPainter {
       }
     }
 
-    final visibleCount = this.param.visibleCount ?? maxLength;
+    final visibleCount = (this.param.param.visibleCount > 0)
+        ? param.param.visibleCount
+        : maxLength;
     if (visibleCount <= 1) {
       return;
     }
 
     final widthPerItem = renderSize.width / (visibleCount - 1);
-    canvas.drawLine(Offset(startX, 0), Offset(startX, 0), paint);
+    // canvas.drawLine(Offset(startX, 0), Offset(startX, 0), paint);
 
     final range = this.range();
     // 获取所有数据的最值
@@ -138,11 +97,15 @@ class JZRGNormalPainter extends CustomPainter {
 
     var didDrawLocationIn = false;
 
+    // 垂直方向上的线
     var locationInLinePaint = Paint()
       ..strokeWidth = 1
-      ..color = Colors.red;
+      ..color = Colors.white;
 
+    double? shouldLocationInX;
     models.forEach((element) {
+      double startX = x;
+      startX = x;
       // 每天线的绘制
       var linePaint = Paint()
         ..strokeWidth = element.strokeWidth
@@ -153,11 +116,9 @@ class JZRGNormalPainter extends CustomPainter {
         // 位置计算
         if (element.lines.length > 1) {
           Offset? from;
-
-          double? shouldLocationInX;
           for (int i = 0; i < visibleCount; i++) {
             {
-              if (this.param.locationIn == i && (didDrawLocationIn == false)) {
+              if (param.locationIn == i && (didDrawLocationIn == false)) {
                 shouldLocationInX = startX;
                 didDrawLocationIn = true;
               }
@@ -177,30 +138,29 @@ class JZRGNormalPainter extends CustomPainter {
               startX = startX + widthPerItem;
             }
           }
-
-          if (shouldLocationInX != null) {
-            canvas.drawLine(
-                Offset(shouldLocationInX, param.padding.top),
-                Offset(
-                    shouldLocationInX, param.padding.top + renderSize.height),
-                locationInLinePaint);
-          }
         } else if (lines.length == 1) {
-          //FIXME: 一个点的时候也需要处理
-
+          //FIXME: 有时一个点的时候也需要处理
         }
       }
     });
+
+    if (shouldLocationInX != null) {
+      canvas.drawLine(
+          Offset(shouldLocationInX!, param.param.renderPadding.top),
+          Offset(shouldLocationInX!,
+              param.param.renderPadding.top + renderSize.height),
+          locationInLinePaint);
+    }
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
+    return true;
   }
 
   /// dx = min
   /// dy = max
   Offset? range() {
-    return JZRGLinesPainterModel.range(models: this.lineModels);
+    return param.param.range(models: lineModels);
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../jz_rich_graph_renderer_normal/jz_rich_graph_renderer_normal_entity.dart';
+
 /// 配置
 class JZRichGraphParam {
   /// widget外边距
@@ -22,6 +24,7 @@ class JZRichGraphParam {
   /// 刻度与renderView之间的关系处理
   double leftDividingRuleOffset; // 左边（0.0
   double rightDividingRuleOffset; // 右边（0.0
+  double ruleGaps = 0;
   TextAlign leftDividingRuleAlignment = TextAlign.left;
   TextAlign rightDividingRuleAlignment = TextAlign.right;
 
@@ -43,6 +46,51 @@ class JZRichGraphParam {
   /// 整个控件的高度
   final double height;
 
+
+  /// 获取最值
+  /// dx = min
+  /// dy = max
+  Offset? range({required List<JZRGLinesPainterModel> models}) {
+    double? max;
+    double? min;
+    // 获取所有数据的最值
+        {
+      for (var element in models) {
+        final renderValues = element.lines.map((e) => e.renderValue).toList();
+        if (renderValues.isNotEmpty) {
+          final tmpMax = renderValues
+              .reduce((value, element) => (value > element) ? value : element);
+          final tmpMin = renderValues
+              .reduce((value, element) => (value < element) ? value : element);
+          if (max != null && min != null) {
+            if (tmpMax > max) {
+              max = tmpMax;
+            }
+            if (min > tmpMin) {
+              min = tmpMin;
+            }
+          } else {
+            max = tmpMax;
+            min = tmpMin;
+          }
+        }
+      }
+    }
+    if (max == min) {
+      return null;
+    }
+
+    if (max == null || min == null) {
+      return null;
+    }
+    var result = Offset(min, max);
+    if (rangeClosure != null) {
+      return rangeClosure!.call(result);
+    }
+    return result;
+  }
+  Offset? Function(Offset?)? rangeClosure;
+
   JZRichGraphParam({
     required this.width,
     required this.height,
@@ -53,12 +101,14 @@ class JZRichGraphParam {
     this.dividingRuleCount = 5,
     this.leftDividingRuleOffset = 0,
     this.rightDividingRuleOffset = 0,
+    this.ruleGaps = 2.0,
     this.leftDividingRuleAlignment = TextAlign.left,
     this.rightDividingRuleAlignment = TextAlign.right,
     this.headerHeight = 40,
     this.headerTitleWidth = 100,
     this.renderHeaderSpacing = 0,
     this.bottomTextHeight = 20,
+    this.rangeClosure,
   });
 
   /// 获取绘制区的尺寸
@@ -86,8 +136,8 @@ class JZRichGraphParam {
   }
 
   int getVisibleCount() {
-    if (this.visibleCount > 0) {
-      return this.visibleCount;
+    if (visibleCount > 0) {
+      return visibleCount;
     }
     return 0;
   }
