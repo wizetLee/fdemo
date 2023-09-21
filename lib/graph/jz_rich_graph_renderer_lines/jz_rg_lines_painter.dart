@@ -91,7 +91,10 @@ class JZRGLinesPainter extends CustomPainter {
       // 每条线的绘制
       var linePaint = Paint()
         ..strokeWidth = element.strokeWidth
-        ..color = element.color;
+        ..color = element.color
+        ..strokeJoin = StrokeJoin.round
+        // ..strokeCap = StrokeCap.butt
+      ;
 
       final lines = element.elements;
       {
@@ -112,7 +115,8 @@ class JZRGLinesPainter extends CustomPainter {
               } else if (element.style == JZRGEachPainterModelStyle.columnar) {
                 canvas.drawLine(
                     to, Offset(startX, renderSize.height / 2), linePaint);
-              } else if (element.style == JZRGEachPainterModelStyle.positiveColumnar) {
+              } else if (element.style ==
+                  JZRGEachPainterModelStyle.positiveColumnar) {
                 canvas.drawLine(
                     to, Offset(startX, renderSize.height), linePaint);
               }
@@ -132,7 +136,9 @@ class JZRGLinesPainter extends CustomPainter {
                     shouldLocationInX = startX;
                     didDrawLocationIn = true;
                   }
-                  pointMap[from] = element;
+                  if (element.showGesturePoint) {
+                    pointMap[from] = element;
+                  }
 
                   if (models.length == 1) {
                     if (element.style == JZRGEachPainterModelStyle.line) {

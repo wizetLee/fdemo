@@ -46,6 +46,6 @@ class JZRGEachPainterModel {
   // 判断用哪一个坐标系，如果作为独立坐标系，则不填写就行
   AxisDirection? axisDirection = AxisDirection.left;
 
-  //FIXME: 计算显示的高度
+  bool showGesturePoint = true;
 
 }
