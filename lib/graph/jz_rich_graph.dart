@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fdemo/graph/jz_rich_graph_param.dart';
 import 'package:fdemo/graph/jz_rich_graph_renderer.dart';
+export 'jz_rg_painter_model.dart';
 
 /// 绘图工具
 /// 包含手势滑动相关配置
@@ -26,9 +27,9 @@ class _JZRichGraphState extends State<JZRichGraph> {
   ValueNotifier<int?> locationInVN = ValueNotifier(null);
 
   late JZRichGraphRendererParam rendererParam =
-      JZRichGraphRendererParam(param: this.widget.param)
-        ..point = this.localPosition
-        ..locationIn = this.locationIn;
+      JZRichGraphRendererParam(param: widget.param)
+        ..point = localPosition
+        ..locationIn = locationIn;
 
   @override
   void dispose() {
@@ -115,44 +116,60 @@ extension _JZRichGraphStateSubWidget on _JZRichGraphState {
   /// 绘图部分
   Widget _buildRenderWidget() {
     final renderSize = widget.param.getRenderSize();
+    var repaintBoundaryPadding = EdgeInsets.only(left: widget.param.renderEdge.left, right: widget.param.renderEdge.right);
+    var verticalPadding = EdgeInsets.only(top: widget.param.renderEdge.top, bottom: widget.param.renderEdge.bottom);
     return Container(
-        padding: EdgeInsets.symmetric(vertical: 5),
+        padding: verticalPadding,
         decoration: BoxDecoration(color: Colors.orange.withOpacity(0.3)),
         width: renderSize.width,
         height: renderSize.height,
         child: Stack(
           children: [
             widget.renderer.getChartBG(param: rendererParam),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 5),
-              child: GestureDetector(
-                child: ValueListenableBuilder(
-                    valueListenable: locationInVN,
-                    builder: (context, value, child) {
-                      final result =
-                          widget.renderer.getRenderResult(param: rendererParam);
-                      if (result != null) return result;
-                      return Container();
-                    }),
-                onTapDown: (TapDownDetails details) {
-                  if (_showPosition()) {
-                    _clean();
-                  } else {
+            RepaintBoundary(
+                child: Container(
+              padding: repaintBoundaryPadding,
+              child: Builder(
+                builder: (context) {
+                  final result =
+                      widget.renderer.getRenderResult(param: rendererParam);
+                  if (result != null) return result;
+                  return Container();
+                },
+              ),
+            )),
+            RepaintBoundary(
+              child: Container(
+                padding: repaintBoundaryPadding,
+                child: GestureDetector(
+                  child: ValueListenableBuilder(
+                      valueListenable: locationInVN,
+                      builder: (context, value, child) {
+                        final result = widget.renderer
+                            .getGestureRenderResult(param: rendererParam);
+                        if (result != null) return result;
+                        return Container();
+                      }),
+                  onTapDown: (TapDownDetails details) {
+                    if (_showPosition()) {
+                      _clean();
+                    } else {
+                      _gestureAction(details.localPosition, renderSize);
+                    }
+                  },
+                  onLongPressEnd: (LongPressEndDetails details) {
                     _gestureAction(details.localPosition, renderSize);
-                  }
-                },
-                onLongPressEnd: (LongPressEndDetails details) {
-                  _gestureAction(details.localPosition, renderSize);
-                },
-                onLongPressStart: (LongPressStartDetails details) {
-                  _gestureAction(details.localPosition, renderSize);
-                },
-                onLongPressMoveUpdate: (LongPressMoveUpdateDetails details) {
-                  _gestureAction(details.localPosition, renderSize);
-                },
-                onLongPressUp: () {
-                  // _clean();
-                },
+                  },
+                  onLongPressStart: (LongPressStartDetails details) {
+                    _gestureAction(details.localPosition, renderSize);
+                  },
+                  onLongPressMoveUpdate: (LongPressMoveUpdateDetails details) {
+                    _gestureAction(details.localPosition, renderSize);
+                  },
+                  onLongPressUp: () {
+                    // _clean();
+                  },
+                ),
               ),
             ),
           ],
@@ -187,6 +204,12 @@ extension _JZRichGraphStateSubWidget on _JZRichGraphState {
   int? _index(Offset point) {
     var index = -1;
     final maxCount = this.widget.param.getVisibleCount();
+    if (maxCount < 0) {
+      return null;
+    }
+    if (maxCount == 1) {
+      return 0;
+    }
     final size = this.widget.param.getRealRenderSize();
 
     final widthPerItem = size.width / (maxCount - 1);

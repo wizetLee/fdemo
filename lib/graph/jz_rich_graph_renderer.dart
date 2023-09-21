@@ -27,6 +27,9 @@ abstract class JZRichGraphRenderer {
   /// 中部绘图结果
   Widget? getRenderResult({required JZRichGraphRendererParam param});
 
+  /// 中部手势变动绘图结果
+  Widget? getGestureRenderResult({required JZRichGraphRendererParam param});
+
   /// 底部部绘图结果
   Widget? getBottomResult({required JZRichGraphRendererParam param});
 

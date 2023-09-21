@@ -9,7 +9,6 @@
 //
 import 'dart:math';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 /// 绘画工具
@@ -17,7 +16,6 @@ class JZGraphTool {}
 
 /// 文字相关
 extension JZGraphToolTextPainter on JZGraphTool {
-
   /// 绘制文字
   void drawText(
       {required Canvas canvas,
@@ -35,41 +33,40 @@ extension JZGraphToolTextPainter on JZGraphTool {
     textPainter.paint(canvas, paintAt);
     // TextPainter textPainter = getTextPainter(date, style: style);
   }
-
 }
 
 /// 线相关
 extension JZGraphToolLines on JZGraphTool {
-
   /// 绘制虚线（垂直/水平方向
-  void drawDashedLine(
-      {required Canvas canvas, // 画布
-        required Paint linePaint,
-        required Offset paintAt, // 开始的绘制点
-        required double width, // 线长度
-        double gap = 4, // 间隔
-        double dashedWidth = 4, // 宽
-        Axis axis = Axis.horizontal, // 方向
-      }) {
-
+  void drawDashedLine({
+    required Canvas canvas, // 画布
+    required Paint linePaint,
+    required Offset paintAt, // 开始的绘制点
+    required double width, // 线长度
+    double gap = 4, // 间隔
+    double dashedWidth = 4, // 宽
+    Axis axis = Axis.horizontal, // 方向
+  }) {
     var start = (axis == Axis.horizontal) ? paintAt.dx : paintAt.dy;
     final end = start + width;
     while (start < end) {
       var p1Value = start;
-      var p2Value = start + gap;
+      var p2Value = start + dashedWidth;
       if (p2Value > end) {
         p2Value = end;
       }
       if (axis == Axis.horizontal) {
-        canvas.drawLine(Offset(p1Value, paintAt.dy), Offset(p2Value, paintAt.dy), linePaint);
+        canvas.drawLine(Offset(p1Value, paintAt.dy),
+            Offset(p2Value, paintAt.dy), linePaint);
       } else {
-        canvas.drawLine(Offset(paintAt.dx, p1Value), Offset(paintAt.dx, p2Value), linePaint);
+        canvas.drawLine(Offset(paintAt.dx, p1Value),
+            Offset(paintAt.dx, p2Value), linePaint);
       }
-      start = p2Value;
+      start = p2Value + gap;
     }
   }
 
-  /// 虚线（任意两点
+  /// 虚线（任意两点，画不了竖线
   Path getDashedPath({
     required Point<double> from, // 起始点
     required Point<double> to, // 终点
@@ -83,13 +80,11 @@ extension JZGraphToolLines on JZGraphTool {
 
     num radians = atan(size.height / size.width);
 
-    num dx = cos(radians) * gap < 0
-        ? cos(radians) * gap * -1
-        : cos(radians) * gap;
+    num dx =
+        cos(radians) * gap < 0 ? cos(radians) * gap * -1 : cos(radians) * gap;
 
-    num dy = sin(radians) * gap < 0
-        ? sin(radians) * gap * -1
-        : sin(radians) * gap;
+    num dy =
+        sin(radians) * gap < 0 ? sin(radians) * gap * -1 : sin(radians) * gap;
 
     while (currentPoint.x <= to.x && currentPoint.y <= to.y) {
       shouldDraw
@@ -103,5 +98,4 @@ extension JZGraphToolLines on JZGraphTool {
     }
     return path;
   }
-
 }

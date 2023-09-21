@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../jz_rich_graph_renderer_normal/jz_rich_graph_renderer_normal_entity.dart';
+import 'jz_rg_painter_model.dart';
+import 'jz_rich_graph_renderer_lines/jz_rg_lines_painter.dart';
+import 'dart:math' as math;
+export 'jz_rg_painter_model.dart';
 
 /// 配置
 class JZRichGraphParam {
@@ -9,6 +11,9 @@ class JZRichGraphParam {
 
   /// 绘图外边距
   EdgeInsets renderPadding = EdgeInsets.zero;
+
+  /// 绘图内边距 EdgeInsets.symmetric(vertical: 5, horizontal: 5)
+  EdgeInsets renderEdge;
 
   /// 视图中数据的可视数量
   int visibleCount = 0;
@@ -46,17 +51,23 @@ class JZRichGraphParam {
   /// 整个控件的高度
   final double height;
 
+  /// 是否需要接地线（目前的使用场景是，打板助手-市场情绪
+  var needGroundConnector = false;
+
 
   /// 获取最值
   /// dx = min
   /// dy = max
-  Offset? range({required List<JZRGLinesPainterModel> models}) {
+  Offset? rangeLeft({required List<JZRGEachPainterModel> models}) {
     double? max;
     double? min;
     // 获取所有数据的最值
         {
       for (var element in models) {
-        final renderValues = element.lines.map((e) => e.renderValue).toList();
+        if (element.axisDirection != AxisDirection.left) {
+          continue;
+        }
+        final renderValues = element.elements.map((e) => e.renderValue).toList();
         if (renderValues.isNotEmpty) {
           final tmpMax = renderValues
               .reduce((value, element) => (value > element) ? value : element);
@@ -76,20 +87,83 @@ class JZRichGraphParam {
         }
       }
     }
-    if (max == min) {
-      return null;
+    if (max != null && max == min) {
+      min = (min! - max!);
     }
 
     if (max == null || min == null) {
       return null;
     }
-    var result = Offset(min, max);
-    if (rangeClosure != null) {
-      return rangeClosure!.call(result);
+
+    for (var element in models) {
+      if (element.style == JZRGEachPainterModelStyle.columnar) {
+        var _max = math.max(min!.abs(), max!.abs());
+        max = _max;
+        min = -_max;
+        // 数据对称处理
+        break;
+      }
+    }
+    var result = Offset(min!, max!);
+    if (rangeLeftClosure != null) {
+      return rangeLeftClosure!.call(result);
     }
     return result;
   }
-  Offset? Function(Offset?)? rangeClosure;
+  Offset? rangeRight({required List<JZRGEachPainterModel> models}) {
+    double? max;
+    double? min;
+    // 获取所有数据的最值
+        {
+      for (var element in models) {
+        if (element.axisDirection != AxisDirection.right) {
+          continue;
+        }
+        final renderValues = element.elements.map((e) => e.renderValue).toList();
+        if (renderValues.isNotEmpty) {
+          final tmpMax = renderValues
+              .reduce((value, element) => (value > element) ? value : element);
+          final tmpMin = renderValues
+              .reduce((value, element) => (value < element) ? value : element);
+          if (max != null && min != null) {
+            if (tmpMax > max) {
+              max = tmpMax;
+            }
+            if (min > tmpMin) {
+              min = tmpMin;
+            }
+          } else {
+            max = tmpMax;
+            min = tmpMin;
+          }
+        }
+      }
+    }
+    if (max != null && max == min) {
+      min = (min! - max!);
+    }
+
+    if (max == null || min == null) {
+      return null;
+    }
+
+    for (var element in models) {
+      if (element.style == JZRGEachPainterModelStyle.columnar) {
+        var _max = math.max(min!.abs(), max!.abs());
+        max = _max;
+        min = -_max;
+        // 数据对称处理
+        break;
+      }
+    }
+    var result = Offset(min!, max!);
+    if (rangeRightClosure != null) {
+      return rangeRightClosure!.call(result);
+    }
+    return result;
+  }
+  Offset? Function(Offset?)? rangeLeftClosure;
+  Offset? Function(Offset?)? rangeRightClosure;
 
   JZRichGraphParam({
     required this.width,
@@ -108,7 +182,9 @@ class JZRichGraphParam {
     this.headerTitleWidth = 100,
     this.renderHeaderSpacing = 0,
     this.bottomTextHeight = 20,
-    this.rangeClosure,
+    this.rangeLeftClosure,
+    this.rangeRightClosure,
+    this.renderEdge = const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
   });
 
   /// 获取绘制区的尺寸
