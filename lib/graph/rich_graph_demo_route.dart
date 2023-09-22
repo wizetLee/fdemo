@@ -38,7 +38,7 @@ class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
         padding: padding,
         visibleCount: count,
         dividingRuleCount: 5,
-        rangeLeftClosure: (range) {
+        leftVerticalAxisRangeClosure: (range) {
           if (range != null) {
             return Offset(range.dx, range.dy);
           }
@@ -96,6 +96,7 @@ class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
     List<JZRichGraphLineRendererLinesValue> lineList1 = [];
     List<JZRichGraphLineRendererLinesValue> lineList2 = [];
     for (int i = 0; i < count; i++) {
+      // var date =  now.millisecondsSinceEpoch / 1000;
       final date = "${now.year}-${now.month}-${now.day + i}";
       {
         final model = JZRichGraphLineRendererLinesValue(
@@ -121,17 +122,17 @@ class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
         lineList2.add(model);
       }
     }
-    {
-      var model = JZRGEachPainterModel();
-      model.style = JZRGEachPainterModelStyle.columnar;
-      model.strokeWidth = 5;
-      model.color = Colors.green;
-      model.axisDirection = AxisDirection.right;
-      model.elements = lineList1
-          .map((e) => JZRGLinesPainterElement(origin: e, renderValue: e.value))
-          .toList();
-      painterModels.add(model);
-    }
+    // {
+    //   var model = JZRGEachPainterModel();
+    //   model.style = JZRGEachPainterModelStyle.columnar;
+    //   model.strokeWidth = 5;
+    //   model.color = Colors.green;
+    //   model.axisDirection = AxisDirection.right;
+    //   model.elements = lineList1
+    //       .map((e) => JZRGLinesPainterElement(origin: e, renderValue: e.value))
+    //       .toList();
+    //   painterModels.add(model);
+    // }
     {
       var model = JZRGEachPainterModel();
       model.style = JZRGEachPainterModelStyle.positiveColumnar;
@@ -146,6 +147,7 @@ class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
     {
       var model = JZRGEachPainterModel();
       model.color = Colors.lightBlueAccent;
+      model.axisDirection = AxisDirection.right;
       model.elements = lineList0
           .map((e) => JZRGLinesPainterElement(origin: e, renderValue: e.value))
           .toList();

@@ -54,6 +54,67 @@ class JZRichGraphParam {
   /// 是否需要接地线（目前的使用场景是，打板助手-市场情绪
   var needGroundConnector = false;
 
+  /// 自定义左右坐标系上的数据范围
+  Offset? Function(Offset?)? leftVerticalAxisRangeClosure;
+  Offset? Function(Offset?)? rightVerticalAxisRangeClosure;
+
+  /// 自定义左右坐标系的显示的数值（dynamic一般情况是个double数值，考虑到特例，所以使用dynamic
+  TextSpan? Function(dynamic)? leftVerticalAxisValueClosure;
+  TextSpan? Function(dynamic)? rightVerticalAxisValueClosure;
+
+  JZRichGraphParam({
+    required this.width,
+    required this.height,
+    this.padding = EdgeInsets.zero,
+    this.renderPadding = EdgeInsets.zero,
+    this.visibleCount = 0,
+    this.renderViewPadding = EdgeInsets.zero,
+    this.dividingRuleCount = 5,
+    this.leftDividingRuleOffset = 0,
+    this.rightDividingRuleOffset = 0,
+    this.ruleGaps = 2.0,
+    this.leftDividingRuleAlignment = TextAlign.left,
+    this.rightDividingRuleAlignment = TextAlign.right,
+    this.headerHeight = 40,
+    this.headerTitleWidth = 100,
+    this.renderHeaderSpacing = 0,
+    this.bottomTextHeight = 20,
+    this.leftVerticalAxisRangeClosure,
+    this.rightVerticalAxisRangeClosure,
+    this.renderEdge = const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+  });
+
+  /// 获取绘制区的尺寸
+  /// 最大的绘图区（包括背景）
+  Size getRenderSize() {
+    return Size(
+        width -
+            padding.left -
+            padding.right -
+            leftDividingRuleOffset -
+            rightDividingRuleOffset,
+        height -
+            padding.top -
+            padding.bottom -
+            bottomTextHeight -
+            renderHeaderSpacing -
+            headerHeight);
+  }
+
+  /// 除却renderPadding之后的绘图区
+  Size getRealRenderSize() {
+    final size = getRenderSize();
+    return Size(size.width - renderPadding.left - renderPadding.right,
+        size.height - renderPadding.top - renderPadding.bottom);
+  }
+
+  int getVisibleCount() {
+    if (visibleCount > 0) {
+      return visibleCount;
+    }
+    return 0;
+  }
+
   /// 获取最值
   /// dx = min
   /// dy = max
@@ -105,8 +166,8 @@ class JZRichGraphParam {
       }
     }
     var result = Offset(min!, max!);
-    if (rangeLeftClosure != null) {
-      return rangeLeftClosure!.call(result);
+    if (leftVerticalAxisRangeClosure != null) {
+      return leftVerticalAxisRangeClosure!.call(result);
     }
     return result;
   }
@@ -159,65 +220,9 @@ class JZRichGraphParam {
       }
     }
     var result = Offset(min!, max!);
-    if (rangeRightClosure != null) {
-      return rangeRightClosure!.call(result);
+    if (rightVerticalAxisRangeClosure != null) {
+      return rightVerticalAxisRangeClosure!.call(result);
     }
     return result;
-  }
-
-  Offset? Function(Offset?)? rangeLeftClosure;
-  Offset? Function(Offset?)? rangeRightClosure;
-
-  JZRichGraphParam({
-    required this.width,
-    required this.height,
-    this.padding = EdgeInsets.zero,
-    this.renderPadding = EdgeInsets.zero,
-    this.visibleCount = 0,
-    this.renderViewPadding = EdgeInsets.zero,
-    this.dividingRuleCount = 5,
-    this.leftDividingRuleOffset = 0,
-    this.rightDividingRuleOffset = 0,
-    this.ruleGaps = 2.0,
-    this.leftDividingRuleAlignment = TextAlign.left,
-    this.rightDividingRuleAlignment = TextAlign.right,
-    this.headerHeight = 40,
-    this.headerTitleWidth = 100,
-    this.renderHeaderSpacing = 0,
-    this.bottomTextHeight = 20,
-    this.rangeLeftClosure,
-    this.rangeRightClosure,
-    this.renderEdge = const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
-  });
-
-  /// 获取绘制区的尺寸
-  /// 最大的绘图区（包括背景）
-  Size getRenderSize() {
-    return Size(
-        width -
-            padding.left -
-            padding.right -
-            leftDividingRuleOffset -
-            rightDividingRuleOffset,
-        height -
-            padding.top -
-            padding.bottom -
-            bottomTextHeight -
-            renderHeaderSpacing -
-            headerHeight);
-  }
-
-  /// 除却renderPadding之后的绘图区
-  Size getRealRenderSize() {
-    final size = getRenderSize();
-    return Size(size.width - renderPadding.left - renderPadding.right,
-        size.height - renderPadding.top - renderPadding.bottom);
-  }
-
-  int getVisibleCount() {
-    if (visibleCount > 0) {
-      return visibleCount;
-    }
-    return 0;
   }
 }

@@ -84,15 +84,18 @@ extension _JZRichGraphLineRenderer on JZRichGraphLinesRenderer {
   List<TextSpan> getBottomRichText({required JZRichGraphRendererParam param}) {
     var painterModels = this.painterModels;
     List<JZRGLinesPainterElement> lines = [];
-    painterModels.forEach((element) {
+    for (var element in painterModels) {
       if (element.elements.length > lines.length) {
         lines = element.elements;
       }
-    });
+    }
 
     final models = lines
         .map((e) => e.origin as JZRichGraphLineRendererLinesValue)
         .toList();
+
+
+
     if (models.isEmpty) {
       return [];
     }
@@ -128,6 +131,7 @@ extension _JZRichGraphLineRenderer on JZRichGraphLinesRenderer {
   /// 设置bottom显示的内容
   Widget _buildBottom(JZRichGraphRendererParam param) {
     final getBottomRichText = this.getBottomRichText(param: param);
+
     final first = (getBottomRichText.isNotEmpty)
         ? getBottomRichText[0]
         : const TextSpan(text: "--");
@@ -266,7 +270,9 @@ extension _JZRichGraphLineRenderer on JZRichGraphLinesRenderer {
             children.add(gap);
           }
 
+          // 绘图的规则自处理
           var _textStyle = textStyle.copyWith(color: Colors.orange);
+
           var text = (model.origin as JZRichGraphLineRendererLinesValue)
               .value
               .toStringAsFixed(2);
@@ -291,7 +297,7 @@ extension _JZRichGraphLineRenderer on JZRichGraphLinesRenderer {
 
     // 获取所有数据的最值
     if (range == null) {
-      return [const TextSpan(text: "--")];
+      return [];
     }
 
     double max = range.dy;
@@ -301,8 +307,19 @@ extension _JZRichGraphLineRenderer on JZRichGraphLinesRenderer {
     final valuePerItem = (dataHeight / (count - 1)).abs();
     List<TextSpan> result = [];
     for (var i = 0; i < count; i++) {
-      var title = (max - (valuePerItem * i)).toStringAsFixed(2);
-      result.add(TextSpan(text: title));
+      var value = max - (valuePerItem * i);
+      if (param.param.leftVerticalAxisValueClosure != null) {
+        var ts = param.param.leftVerticalAxisValueClosure!.call(value);
+        if (ts != null) {
+          //FIXME: 修改为标准的格式
+          result.add(ts);
+        } else {
+          result.add(const TextSpan(text: ""));
+        }
+      } else {
+        var title = value.toStringAsFixed(2);
+        result.add(TextSpan(text: title));
+      }
     }
     return result;
   }
@@ -314,7 +331,7 @@ extension _JZRichGraphLineRenderer on JZRichGraphLinesRenderer {
 
     // 获取所有数据的最值
     if (range == null) {
-      return [const TextSpan(text: "--")];
+      return [];
     }
 
     double max = range.dy;
@@ -324,8 +341,19 @@ extension _JZRichGraphLineRenderer on JZRichGraphLinesRenderer {
     final valuePerItem = (dataHeight / (count - 1)).abs();
     List<TextSpan> result = [];
     for (var i = 0; i < count; i++) {
-      var title = (max - (valuePerItem * i)).toStringAsFixed(2);
-      result.add(TextSpan(text: title));
+      var value = max - (valuePerItem * i);
+      if (param.param.rightVerticalAxisValueClosure != null) {
+        var ts = param.param.rightVerticalAxisValueClosure!.call(value);
+        if (ts != null) {
+          //FIXME: 修改为标准的格式
+          result.add(ts);
+        } else {
+          result.add(const TextSpan(text: ""));
+        }
+      } else {
+        var title = value.toStringAsFixed(2);
+        result.add(TextSpan(text: title));
+      }
     }
     return result;
   }
