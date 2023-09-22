@@ -40,7 +40,7 @@ class JZRGLinesPainter extends CustomPainter {
             param.param.renderPadding.top -
             param.param.renderPadding.bottom);
 
-    final models = this.lineModels;
+    final models = lineModels;
     var maxLength = 0;
     {
       for (int i = 0; i < models.length; i++) {
@@ -50,16 +50,14 @@ class JZRGLinesPainter extends CustomPainter {
       }
     }
 
-    final visibleCount = (this.param.param.visibleCount > 0)
-        ? param.param.visibleCount
-        : maxLength;
+    final visibleCount =
+        (param.param.visibleCount > 0) ? param.param.visibleCount : maxLength;
     if (visibleCount <= 1) {
       return;
     }
 
     final widthPerItem = renderSize.width / (visibleCount);
 
-    //FIXME: 需要判断坐标系是否独立，
     var didDrawLocationIn = false;
     double? shouldLocationInX;
 
@@ -92,14 +90,12 @@ class JZRGLinesPainter extends CustomPainter {
       var linePaint = Paint()
         ..strokeWidth = element.strokeWidth
         ..color = element.color
-        ..strokeJoin = StrokeJoin.round
-        // ..strokeCap = StrokeCap.butt
-      ;
+        ..strokeJoin = StrokeJoin.round;
 
       final lines = element.elements;
       {
         // 位置计算
-        if (element.elements.length > 1) {
+        if (element.elements.length > 0) {
           Offset? from;
           for (int i = 0; i < visibleCount; i++) {
             if (lines.length > i) {
@@ -152,9 +148,10 @@ class JZRGLinesPainter extends CustomPainter {
               startX = startX + widthPerItem;
             }
           }
-        } else if (lines.length == 1) {
-          //FIXME: 有时一个点的时候也需要处理
         }
+        // else if (lines.length == 1) {
+        //   //FIXME: 有时一个点的时候也需要处理
+        // }
       }
     }
 

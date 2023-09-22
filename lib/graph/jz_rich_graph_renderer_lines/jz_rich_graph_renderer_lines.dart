@@ -5,6 +5,7 @@ import 'package:fdemo/graph/jz_rich_graph_renderer.dart';
 import '../../graph/jz_rich_graph_renderer_lines/jz_rich_graph_renderer_lines_value.dart';
 import '../jz_rg_painter_model.dart';
 export 'package:fdemo/graph/jz_rich_graph_renderer.dart';
+import 'dart:ui' as ui show PlaceholderAlignment;
 
 /// 多线段绘制
 class JZRichGraphLinesRenderer extends JZRichGraphRenderer {
@@ -44,8 +45,18 @@ class JZRichGraphLinesRenderer extends JZRichGraphRenderer {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text.rich(getInfoTitle(param: param)!),
-            Text.rich(getInfo(param: param)!)
+            Expanded(
+              //   child: FittedBox(
+              // fit: BoxFit.scaleDown,
+              // alignment: Alignment.centerLeft,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Text.rich(getInfoTitle(param: param) ??
+                    WidgetSpan(child: Container())),
+                // )
+              ),
+            ),
+            Text.rich(getInfo(param: param) ?? WidgetSpan(child: Container()))
           ],
         ));
   }
@@ -146,6 +157,7 @@ extension _JZRichGraphLineRenderer on JZRichGraphLinesRenderer {
   }
 
   TextSpan? getInfo({required JZRichGraphRendererParam param}) {
+    return null;
     var value = "--";
     final locationIn = param.locationIn;
     if (painterModels.isNotEmpty) {
@@ -184,34 +196,93 @@ extension _JZRichGraphLineRenderer on JZRichGraphLinesRenderer {
   }
 
   TextSpan? getInfoTitle({required JZRichGraphRendererParam param}) {
+    List<InlineSpan> children = [];
+    TextStyle textStyle = TextStyle(
+      fontSize: 14,
+    );
+
     var date = "--";
     final locationIn = param.locationIn;
-    if (painterModels.isNotEmpty) {
+    painterModels.forEach((element) {
+      // 数据表示
+      // 🟥⬛🟨🟦方框
+      // 标题
+      // 数据
       //FIXME: 因为只有一条线
-      final painterModel = painterModels[0];
+      final painterModel = element;
+      JZRGLinesPainterElement? model;
       if (locationIn != null && painterModel.elements.length > locationIn) {
-        final model = painterModel.elements[locationIn];
+        model = painterModel.elements[locationIn];
+
         date = (model.origin as JZRichGraphLineRendererLinesValue).date;
       } else if (painterModel.elements.length >
           (param.param.visibleCount - 1)) {
         final index = param.param.visibleCount - 1;
-        final model = painterModel.elements[index];
+        model = painterModel.elements[index];
+
         date = (model.origin as JZRichGraphLineRendererLinesValue).date;
       } else {
         if (painterModel.elements.isEmpty) {
           date = "--";
         } else {
-          final model = painterModel.elements.last;
+          model = painterModel.elements.last;
           date = (model.origin as JZRichGraphLineRendererLinesValue).date;
         }
       }
-    }
-    return TextSpan(
-        text: date,
-        style: const TextStyle(
-          fontSize: 14,
-        ),
-        children: const []);
+
+      if (element.infoTitleClosure != null) {
+        var span = element.infoTitleClosure!.call(model);
+        children.add(span);
+      } else {
+        var block = WidgetSpan(
+            alignment: ui.PlaceholderAlignment.middle,
+            child: Container(
+              width: 12,
+              height: 12,
+              decoration: BoxDecoration(
+                  color: element.color,
+                  borderRadius: BorderRadius.circular(2.0)),
+            ));
+        children.add(block);
+
+        {
+          var gap = WidgetSpan(
+            alignment: ui.PlaceholderAlignment.middle,
+            child: Container(width: 2, height: 2),
+          );
+          children.add(gap);
+        }
+
+        var title = TextSpan(text: element.infoTitle ?? "--", style: textStyle);
+        children.add(title);
+
+        if (model != null &&
+            model.origin is JZRichGraphLineRendererLinesValue) {
+          {
+            var gap = WidgetSpan(
+              alignment: ui.PlaceholderAlignment.middle,
+              child: Container(width: 2, height: 2),
+            );
+            children.add(gap);
+          }
+
+          var _textStyle = textStyle.copyWith(color: Colors.orange);
+          var text = (model.origin as JZRichGraphLineRendererLinesValue)
+              .value
+              .toStringAsFixed(2);
+          var value = TextSpan(text: text, style: _textStyle);
+          children.add(value);
+        }
+        {
+          var gap = WidgetSpan(
+            alignment: ui.PlaceholderAlignment.middle,
+            child: Container(width: 12, height: 12),
+          );
+          children.add(gap);
+        }
+      }
+    });
+    return TextSpan(style: textStyle, children: children);
   }
 
   List<TextSpan> getLeftRichText({required JZRichGraphRendererParam param}) {

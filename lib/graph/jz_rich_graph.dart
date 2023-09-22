@@ -51,7 +51,7 @@ class _JZRichGraphState extends State<JZRichGraph> {
             padding: this.widget.param.renderViewPadding,
             child: Column(
               children: [
-                _bulidHeader(),
+                _buildHeader(),
                 _buildBody(),
               ],
             ),
@@ -60,9 +60,7 @@ class _JZRichGraphState extends State<JZRichGraph> {
   }
 
   /// 头部内容
-  Widget _bulidHeader() {
-    // return widget.renderer.getHeaderResult(param: this.rendererParam) ??
-    //     Container();
+  Widget _buildHeader() {
     return ValueListenableBuilder(
         valueListenable: locationInVN,
         builder: (context, value, child) {
@@ -116,8 +114,12 @@ extension _JZRichGraphStateSubWidget on _JZRichGraphState {
   /// 绘图部分
   Widget _buildRenderWidget() {
     final renderSize = widget.param.getRenderSize();
-    var repaintBoundaryPadding = EdgeInsets.only(left: widget.param.renderEdge.left, right: widget.param.renderEdge.right);
-    var verticalPadding = EdgeInsets.only(top: widget.param.renderEdge.top, bottom: widget.param.renderEdge.bottom);
+    var repaintBoundaryPadding = EdgeInsets.only(
+        left: widget.param.renderEdge.left,
+        right: widget.param.renderEdge.right);
+    var verticalPadding = EdgeInsets.only(
+        top: widget.param.renderEdge.top,
+        bottom: widget.param.renderEdge.bottom);
     return Container(
         padding: verticalPadding,
         decoration: BoxDecoration(color: Colors.orange.withOpacity(0.3)),
@@ -188,16 +190,21 @@ extension _JZRichGraphStateSubWidget on _JZRichGraphState {
     locationInVN.value = null;
   }
 
-  /// 收视统一调度
+  /// 手势统一调度
   _gestureAction(Offset localPosition, Size renderSize) {
     this.localPosition = localPosition;
     final locationIn = _index(localPosition);
+    if (locationIn == this.locationIn) {
+      return;
+    }
     this.locationIn = locationIn;
     rendererParam.point = localPosition;
     rendererParam.locationIn = locationIn;
     locationInVN.value = locationIn;
-    if (kDebugMode && locationIn != null) {
-      print("手势locationIn = ${locationIn}");
+    if (kDebugMode) {
+      if (locationIn != null) {
+        print("手势locationIn = $locationIn");
+      }
     }
   }
 

@@ -5,7 +5,6 @@
 * @Description :
 */
 
-
 import 'package:flutter/material.dart';
 
 /// 绘制模型的单个数据
@@ -27,10 +26,11 @@ enum JZRGEachPainterModelStyle {
 
   /// 只有正方向的柱
   positiveColumnar,
-
 }
 
 // 坐标系统
+
+typedef JZRGInfoTitle = InlineSpan Function(JZRGLinesPainterElement?);
 
 /// 单个绘制模型的详细配置
 class JZRGEachPainterModel {
@@ -48,4 +48,11 @@ class JZRGEachPainterModel {
 
   bool showGesturePoint = true;
 
+  // 数据展示的方式（左侧
+  JZRGInfoTitle? infoTitleClosure;
+  String? infoTitle;
+
+  // 数据展示的方式（右侧
+  JZRGInfoTitle? infoClosure;
+  String? info;
 }

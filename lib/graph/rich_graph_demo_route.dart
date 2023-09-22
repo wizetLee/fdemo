@@ -18,7 +18,6 @@ class RichGraphDemoRoute extends StatefulWidget {
 class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
   List<JZRGEachPainterModel> painterModels = [];
   int count = 20;
-
   var nextIntCount = 100;
 
   @override
@@ -48,6 +47,15 @@ class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
         // renderPadding: EdgeInsets.fromLTRB(10, 10, 10, 10),
         );
 
+    // return ListView.builder(itemBuilder: (context, index) {
+    //   return JZRichGraph(
+    //     param: param,
+    //     renderer:
+    //     JZRichGraphLinesRenderer(painterModels: painterModels),
+    //   );
+    // },
+    // itemCount: 10,
+    // );
     return SingleChildScrollView(
       child: Container(
           height: 2000,
@@ -79,7 +87,6 @@ class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
           color: Colors.white),
     );
   }
-
 
   _reqData() {
     painterModels.clear();
@@ -121,8 +128,7 @@ class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
       model.color = Colors.green;
       model.axisDirection = AxisDirection.right;
       model.elements = lineList1
-          .map(
-              (e) => JZRGLinesPainterElement(origin: e, renderValue: e.value))
+          .map((e) => JZRGLinesPainterElement(origin: e, renderValue: e.value))
           .toList();
       painterModels.add(model);
     }
@@ -133,8 +139,7 @@ class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
       model.color = Colors.yellow;
       model.axisDirection = AxisDirection.right;
       model.elements = lineList2
-          .map(
-              (e) => JZRGLinesPainterElement(origin: e, renderValue: e.value))
+          .map((e) => JZRGLinesPainterElement(origin: e, renderValue: e.value))
           .toList();
       painterModels.add(model);
     }
@@ -142,8 +147,7 @@ class _RichGraphDemoRouteState extends State<RichGraphDemoRoute> {
       var model = JZRGEachPainterModel();
       model.color = Colors.lightBlueAccent;
       model.elements = lineList0
-          .map(
-              (e) => JZRGLinesPainterElement(origin: e, renderValue: e.value))
+          .map((e) => JZRGLinesPainterElement(origin: e, renderValue: e.value))
           .toList();
       painterModels.add(model);
     }

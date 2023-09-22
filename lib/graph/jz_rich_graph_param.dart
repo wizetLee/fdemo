@@ -54,7 +54,6 @@ class JZRichGraphParam {
   /// 是否需要接地线（目前的使用场景是，打板助手-市场情绪
   var needGroundConnector = false;
 
-
   /// 获取最值
   /// dx = min
   /// dy = max
@@ -62,12 +61,13 @@ class JZRichGraphParam {
     double? max;
     double? min;
     // 获取所有数据的最值
-        {
+    {
       for (var element in models) {
         if (element.axisDirection != AxisDirection.left) {
           continue;
         }
-        final renderValues = element.elements.map((e) => e.renderValue).toList();
+        final renderValues =
+            element.elements.map((e) => e.renderValue).toList();
         if (renderValues.isNotEmpty) {
           final tmpMax = renderValues
               .reduce((value, element) => (value > element) ? value : element);
@@ -110,16 +110,18 @@ class JZRichGraphParam {
     }
     return result;
   }
+
   Offset? rangeRight({required List<JZRGEachPainterModel> models}) {
     double? max;
     double? min;
     // 获取所有数据的最值
-        {
+    {
       for (var element in models) {
         if (element.axisDirection != AxisDirection.right) {
           continue;
         }
-        final renderValues = element.elements.map((e) => e.renderValue).toList();
+        final renderValues =
+            element.elements.map((e) => e.renderValue).toList();
         if (renderValues.isNotEmpty) {
           final tmpMax = renderValues
               .reduce((value, element) => (value > element) ? value : element);
@@ -162,6 +164,7 @@ class JZRichGraphParam {
     }
     return result;
   }
+
   Offset? Function(Offset?)? rangeLeftClosure;
   Offset? Function(Offset?)? rangeRightClosure;
 

@@ -15,7 +15,6 @@ class JZRichGraphRendererParam {
 
 /// 渲染器
 abstract class JZRichGraphRenderer {
-
   void build(BuildContext context);
 
   /// 背景
@@ -32,5 +31,4 @@ abstract class JZRichGraphRenderer {
 
   /// 底部部绘图结果
   Widget? getBottomResult({required JZRichGraphRendererParam param});
-
 }
