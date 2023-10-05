@@ -15,6 +15,8 @@ class JZRichGraphRendererParam {
 
 /// 渲染器
 abstract class JZRichGraphRenderer {
+  void build(BuildContext context);
+
   /// 背景
   Widget getChartBG({required JZRichGraphRendererParam param});
 
@@ -24,12 +26,9 @@ abstract class JZRichGraphRenderer {
   /// 中部绘图结果
   Widget? getRenderResult({required JZRichGraphRendererParam param});
 
+  /// 中部手势变动绘图结果
+  Widget? getGestureRenderResult({required JZRichGraphRendererParam param});
+
   /// 底部部绘图结果
   Widget? getBottomResult({required JZRichGraphRendererParam param});
-
-  /// 左刻度
-  Widget? getLeftRule({required JZRichGraphRendererParam param});
-
-  /// 右刻度
-  Widget? getRightRule({required JZRichGraphRendererParam param});
 }

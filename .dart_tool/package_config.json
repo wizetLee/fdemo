@@ -3,19 +3,19 @@
   "packages": [
     {
       "name": "_fe_analyzer_shared",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/_fe_analyzer_shared-61.0.0",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/_fe_analyzer_shared-64.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.0"
     },
     {
       "name": "analyzer",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/analyzer-5.13.0",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/analyzer-6.2.0",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "archive",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/archive-3.3.7",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/archive-3.3.9",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -39,9 +39,9 @@
     },
     {
       "name": "build",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/build-2.3.1",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/build-2.4.1",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.19"
     },
     {
       "name": "build_config",
@@ -51,27 +51,27 @@
     },
     {
       "name": "build_daemon",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/build_daemon-3.1.1",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/build_daemon-4.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
     {
       "name": "build_resolvers",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/build_resolvers-2.2.1",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/build_resolvers-2.3.2",
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
     {
       "name": "build_runner",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/build_runner-2.3.3",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/build_runner-2.4.6",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "3.0"
     },
     {
       "name": "build_runner_core",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/build_runner_core-7.2.7+1",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/build_runner_core-7.2.10",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.19"
     },
     {
       "name": "built_collection",
@@ -81,7 +81,7 @@
     },
     {
       "name": "built_value",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/built_value-8.6.1",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/built_value-8.6.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -105,13 +105,13 @@
     },
     {
       "name": "code_builder",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/code_builder-4.5.0",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/code_builder-4.6.0",
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
     {
       "name": "collection",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/collection-1.17.1",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/collection-1.17.2",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -129,15 +129,15 @@
     },
     {
       "name": "cupertino_icons",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/cupertino_icons-1.0.5",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/cupertino_icons-1.0.6",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.19"
     },
     {
       "name": "dart_style",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/dart_style-2.3.2",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/dart_style-2.3.3",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "device_info",
@@ -159,7 +159,7 @@
     },
     {
       "name": "extended_nested_scroll_view",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/extended_nested_scroll_view-6.0.0",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/extended_nested_scroll_view-6.1.2",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -189,9 +189,9 @@
     },
     {
       "name": "file",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/file-6.1.4",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/file-7.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "fixnum",
@@ -297,15 +297,15 @@
     },
     {
       "name": "matcher",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/matcher-0.12.15",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/matcher-0.12.16",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "material_color_utilities",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/material_color_utilities-0.2.0",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/material_color_utilities-0.5.0",
       "packageUri": "lib/",
-      "languageVersion": "2.13"
+      "languageVersion": "2.17"
     },
     {
       "name": "meta",
@@ -327,9 +327,9 @@
     },
     {
       "name": "mobx_codegen",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/mobx_codegen-2.3.0",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/mobx_codegen-2.4.0",
       "packageUri": "lib/",
-      "languageVersion": "2.13"
+      "languageVersion": "3.0"
     },
     {
       "name": "nested",
@@ -351,9 +351,9 @@
     },
     {
       "name": "plugin_platform_interface",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/plugin_platform_interface-2.1.4",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/plugin_platform_interface-2.1.6",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "2.19"
     },
     {
       "name": "pointycastle",
@@ -405,15 +405,15 @@
     },
     {
       "name": "source_gen",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/source_gen-1.3.2",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/source_gen-1.4.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "source_span",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/source_span-1.9.1",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/source_span-1.10.0",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "2.18"
     },
     {
       "name": "stack_trace",
@@ -447,7 +447,7 @@
     },
     {
       "name": "test_api",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/test_api-0.5.1",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/test_api-0.6.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -471,21 +471,27 @@
     },
     {
       "name": "visibility_detector",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/visibility_detector-0.3.3",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/visibility_detector-0.4.0+2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "watcher",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/watcher-1.0.2",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/watcher-1.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "3.0"
     },
     {
       "name": "waterfall_flow",
       "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/waterfall_flow-3.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "web",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/web-0.1.4-beta",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
     },
     {
       "name": "web_socket_channel",
@@ -506,7 +512,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2023-07-29T04:42:00.038953Z",
+  "generated": "2023-09-20T02:04:45.293971Z",
   "generator": "pub",
-  "generatorVersion": "3.0.6"
+  "generatorVersion": "3.1.2"
 }
