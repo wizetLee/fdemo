@@ -17,6 +17,7 @@ import 'life_cycle/app_life_cycle2.dart';
 import 'mobx/mobx_route.dart';
 import 'nest_scroll_view/nest_scroll_view_route.dart';
 import 'route/JZRouteManager.dart';
+import 'two_dimensional_scrollView_route/two_dimensional_scrollView_route.dart';
 
 void main() {
   runApp(const MyApp());
@@ -190,6 +191,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Item> list() {
     List<Item> list = [];
+    {
+      final item = Item(title: "TwoDimensionalScrollView");
+      item.action = () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TwoDimensionalScrollViewRoute(),
+          ),
+        );
+      };
+      list.add(item);
+    }
     {
       final item = Item(title: "传统的跳转Navigator.push：Graph");
       item.action = () {

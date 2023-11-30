@@ -15,7 +15,7 @@
     },
     {
       "name": "archive",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/archive-3.3.9",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/archive-3.4.9",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -51,25 +51,25 @@
     },
     {
       "name": "build_daemon",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/build_daemon-4.0.0",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/build_daemon-4.0.1",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "3.0"
     },
     {
       "name": "build_resolvers",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/build_resolvers-2.3.2",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/build_resolvers-2.4.1",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "build_runner",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/build_runner-2.4.6",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/build_runner-2.4.7",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "build_runner_core",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/build_runner_core-7.2.10",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/build_runner_core-7.2.11",
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
@@ -81,7 +81,7 @@
     },
     {
       "name": "built_value",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/built_value-8.6.2",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/built_value-8.8.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -105,9 +105,9 @@
     },
     {
       "name": "code_builder",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/code_builder-4.6.0",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/code_builder-4.8.0",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "collection",
@@ -135,7 +135,7 @@
     },
     {
       "name": "dart_style",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/dart_style-2.3.3",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/dart_style-2.3.4",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -213,7 +213,7 @@
     },
     {
       "name": "flutter_mobx",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/flutter_mobx-2.0.6+5",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/flutter_mobx-2.2.0",
       "packageUri": "lib/",
       "languageVersion": "2.13"
     },
@@ -321,7 +321,7 @@
     },
     {
       "name": "mobx",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/mobx-2.2.0",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/mobx-2.2.1",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -351,9 +351,9 @@
     },
     {
       "name": "plugin_platform_interface",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/plugin_platform_interface-2.1.6",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/plugin_platform_interface-2.1.7",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "pointycastle",
@@ -369,7 +369,7 @@
     },
     {
       "name": "provider",
-      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/provider-6.0.5",
+      "rootUri": "file:///Users/wizet/.pub-cache/hosted/pub.flutter-io.cn/provider-6.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -512,7 +512,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2023-09-20T02:04:45.293971Z",
+  "generated": "2023-11-30T08:21:34.539217Z",
   "generator": "pub",
   "generatorVersion": "3.1.2"
 }
