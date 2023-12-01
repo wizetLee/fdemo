@@ -10,7 +10,7 @@
 ///
 library table_view;
 
-export 'src/table_view/table.dart';
-export 'src/table_view/table_cell.dart';
-export 'src/table_view/table_delegate.dart';
-export 'src/table_view/table_span.dart';
+export 'table_view/table.dart';
+export 'table_view/table_cell.dart';
+export 'table_view/table_delegate.dart';
+export 'table_view/table_span.dart';
