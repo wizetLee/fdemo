@@ -36,13 +36,10 @@ class _AnnotateRouteState extends State<AnnotateRoute> {
     super.didUpdateWidget(oldWidget);
   }
 
-
   Image? uiimage;
 
   @override
   Widget build(BuildContext context) {
-
-
 
     return Scaffold(
       body: Container(

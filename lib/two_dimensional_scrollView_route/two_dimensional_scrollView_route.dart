@@ -5,7 +5,6 @@
 * @Description :
 */
 
-
 import 'package:fdemo/two_dimensional_scrollView_route/jz_2d_scroll_view.dart';
 import 'package:fdemo/two_dimensional_scrollView_route/table_view/jz_table_span_border.dart';
 import 'package:fdemo/two_dimensional_scrollView_route/two_dimensional_scrollables.dart';
@@ -37,18 +36,18 @@ class _TwoDimensionalScrollViewRouteState
       persistentFooterButtons: <Widget>[
         TextButton(
           onPressed: () {
-            if (_verticalController.hasClients) {
-              _verticalController.jumpTo(0);
-            }
+            // if (_verticalController.hasClients) {
+            //   _verticalController.jumpTo(0);
+            // }
           },
           child: const Text('Jump to Top'),
         ),
         TextButton(
           onPressed: () {
-            if (_verticalController.hasClients) {
-              _verticalController
-                  .jumpTo(_verticalController.position.maxScrollExtent);
-            }
+            // if (_verticalController.hasClients) {
+            //   _verticalController
+            //       .jumpTo(_verticalController.position.maxScrollExtent);
+            // }
           },
           child: const Text('Jump to Bottom'),
         ),
@@ -64,7 +63,43 @@ class _TwoDimensionalScrollViewRouteState
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      PrimaryScrollController.maybeOf(context)?.addListener(() {
+        print(
+            "${PrimaryScrollController.maybeOf(context)?.positions.last.pixels}");
+      });
+    });
+  }
+
   Widget _body() {
+    // return JZ2DScrollView(
+    //   rowHeightMap: {0: 32},
+    //   columnWidthMap: {0: 50},
+    //   borderColor: Colors.greenAccent,
+    //   horizontalController: _hController,
+    //   // controller: _verticalController,
+    //   cellProvider: (BuildContext context, int row, int column) {
+    //     return GestureDetector(
+    //       onTap: () {
+    //         // var primaryScrollController = PrimaryScrollController.maybeOf(context);
+    //         // if (primaryScrollController != null) {
+    //         //   primaryScrollController.positions.last.jumpTo(100);
+    //         // }
+    //         _hController.jumpTo(100);
+    //       },
+    //       child: Container(
+    //         alignment: Alignment.center,
+    //         color: (column == 0 || row == 0) ? Colors.orange : Colors.white,
+    //         child: Text("${row}-${column}"),
+    //       ),
+    //     );
+    //   },
+    //   columnCount: 10,
+    //   rowCount: 100,
+    // );
     return ExtendedNestedScrollView(
       controller: _verticalController,
       pinnedHeaderSliverHeightBuilder: () {
@@ -87,11 +122,12 @@ class _TwoDimensionalScrollViewRouteState
         cellProvider: (BuildContext context, int row, int column) {
           return GestureDetector(
             onTap: () {
-              // var primaryScrollController = PrimaryScrollController.maybeOf(context);
-              // if (primaryScrollController != null) {
-              //   primaryScrollController.positions.last.jumpTo(100);
-              // }
-              _hController.jumpTo(100);
+              var primaryScrollController = PrimaryScrollController.maybeOf(context);
+              if (primaryScrollController != null && primaryScrollController.positions.isNotEmpty) {
+                primaryScrollController.positions.last.jumpTo(100);
+              }
+              _verticalController.jumpTo(_verticalController.positions.last.pixels + 100);
+              // _hController.jumpTo(100);
             },
             child: Container(
               alignment: Alignment.center,

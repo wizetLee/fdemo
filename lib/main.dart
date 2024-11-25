@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:fdemo/animation/animation_route.dart';
 import 'package:fdemo/annotate/annotate_route.dart';
 import 'package:fdemo/font/font_route.dart';
@@ -7,6 +9,7 @@ import 'package:fdemo/provider/provider_test.dart';
 import 'package:fdemo/scrollbar/scrollbar_route.dart';
 import 'package:fdemo/segment/jz_segmented_view.dart';
 import 'package:fdemo/slider/slider_route.dart';
+import 'package:fdemo/sliver/sliver_route.dart';
 import 'package:fdemo/system_lib_test/system_lib_test.dart';
 import 'package:fdemo/test/test_route.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +21,7 @@ import 'mobx/mobx_route.dart';
 import 'nest_scroll_view/nest_scroll_view_route.dart';
 import 'route/JZRouteManager.dart';
 import 'two_dimensional_scrollView_route/two_dimensional_scrollView_route.dart';
+import 'package:fdemo/overlay/overlay_route.dart';
 
 void main() {
   runApp(const MyApp());
@@ -67,12 +71,32 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+abstract class JZTimestampClass  {
+
+}
+
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+
+  /// 转换为00:00::00秒的时间戳
+  static int getFirstSecond(int date) {
+    final result = date - ((date + 28800) % 86400);
+    return result;
+  }
+
+  /// 转换为23:59::50秒的时间戳
+  static int getLastSecond(int date) {
+    return getFirstSecond(date) + 86399;
+  }
 
   @override
   void initState() {
     super.initState();
+    print(86400 % 86400);
+    int value = _MyHomePageState.getFirstSecond(1711073047);
+    int value2 = _MyHomePageState.getLastSecond(1711073047);
+    print(value);
+    print(value2);
 
     /// 注册路由处
     Map<String, PageBuilder> map = Map();
@@ -191,6 +215,30 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Item> list() {
     List<Item> list = [];
+    {
+      final item = Item(title: "SliverRoute");
+      item.action = () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SliverRoute(),
+          ),
+        );
+      };
+      list.add(item);
+    }
+    {
+      final item = Item(title: "OverlayRoute");
+      item.action = () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyOverlayRoute(),
+          ),
+        );
+      };
+      list.add(item);
+    }
     {
       final item = Item(title: "TwoDimensionalScrollView");
       item.action = () {
