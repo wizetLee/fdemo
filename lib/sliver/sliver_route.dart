@@ -44,7 +44,6 @@ class _SliverRouteState extends State<SliverRoute> {
   }
 
   Widget _body() {
-    // AssetImage('assets/images/$fileName', package: 'fdemo')
     return SliverExamplePage();
   }
 }
@@ -62,10 +61,10 @@ class SliverExamplePage extends StatelessWidget {
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               title: Text("Sliver Example"),
-              background: Image.network(
-                'https://via.placeholder.com/800x400',
-                fit: BoxFit.cover,
-              ),
+              // background: Image.network(
+              //   'https://via.placeholder.com/800x400',
+              //   fit: BoxFit.cover,
+              // ),
             ),
           ),
           SliverToBoxAdapter(
